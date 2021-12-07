@@ -17,7 +17,7 @@ export class SHAPESComponent implements OnInit {
   ngOnInit(): void {
 
   }}
-  export class rect{
+  export class SHAPES{
     isDrawing: boolean;
     startX=0;
      startY=0;
@@ -44,7 +44,29 @@ export class SHAPESComponent implements OnInit {
              this.isDrawing=true;}
        }
       }
-    }}
+    } 
+    square(){
+    this.isDrawing =false;
+    let x=0;
+    let y=0;
+    let lasty=0;
+    let lastx=0;
+    onmousedown = (event: MouseEvent) => { 
+       x=event.clientX;
+       y=event.clientY;
+       onmousedown = (event: MouseEvent) => { 
+        lastx=event.clientX;
+        lasty=event.clientY; 
+        console.log(x,y);
+          if(!this.isDrawing){
+           this.context.strokeRect(x,y,lastx-x,lastx-x);
+           lastx=lasty=0;
+           this.isDrawing=true;}
+     }
+    } 
+    
+   }
+  }
   /**private paint: boolean;
 
   private clickX: number[] = [];
