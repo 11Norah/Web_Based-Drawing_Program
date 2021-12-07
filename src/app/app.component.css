@@ -1,0 +1,13 @@
+p {
+    font-family: Lato;
+  }
+  :host{
+    display: block;
+    height: 100vh;
+  }
+ #canvas{
+   stroke: blue;
+ } 
+ .button{
+   padding-bottom: 10cm;
+ }
