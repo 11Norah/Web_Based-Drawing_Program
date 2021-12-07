@@ -18,10 +18,20 @@ export class AppComponent  {
     this.context=this.canvas.nativeElement.getContext('2d');
 }
   rectangle():void{
-    const shape_rect=new rect(this.context);
+    const shape_rect=new SHAPES(this.context);
    
     shape_rect.rectangle();
   };
+  square():void{
+    
+    const shape_square=new SHAPES(this.context);
+    
+    shape_square.square();
+  };
+  clearCanvas() {
+    var m = confirm("Want to clear");
+    if (m) {
+        this.context.clearRect(0, 0, 1000, 500);}}
 }
 
 /**window.addEventListener("load", ()=>{
