@@ -28,39 +28,16 @@ export class AppComponent  {
     
     shape_square.square();
   };
+   line(){
+     const new_line=new SHAPES(this.context);
+     new_line.drawLine();
+   }  
+  
   clearCanvas() {
     var m = confirm("Want to clear");
     if (m) {
         this.context.clearRect(0, 0, 1000, 500);}}
 }
 
-/**window.addEventListener("load", ()=>{
-   let canvas =<HTMLCanvasElement> document.getElementById('canvas');
-   
-   let context =canvas.getContext('2d');
-   let painting =false;
-   
-   function pressEventHandler(){
-     painting=true;
-   }
-   function releaseEventHandler(){
-     painting=false;
-   }
-   function dragEventHandler(e :any){
-      if(!painting) return;
-      if(context){
-      context.lineWidth= 5;
-      context.lineCap='round';
-      context.lineTo(e.clientX ,e.clientY);
-      context.stroke();
-      
-      }
-   }
-   canvas.addEventListener("mousedown", pressEventHandler);
-    canvas.addEventListener("mousemove", dragEventHandler);
-    canvas.addEventListener("mouseup", releaseEventHandler);
-    
-    
-    
-});*/
+
 
