@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import { rect, SHAPESComponent } from './shapes/shapes.component';
+import {  SHAPES, SHAPESComponent } from './shapes/shapes.component';
 
 @Component({
   selector: 'app-root',
