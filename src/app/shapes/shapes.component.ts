@@ -38,10 +38,8 @@ export class SHAPESComponent implements OnInit {
           lastx=event.clientX;
           lasty=event.clientY;
           console.log(x,y);
-            if(!this.isDrawing){
-             this.context.strokeRect(x,y,lastx-x,lasty-y);
-             lastx=lasty=0;
-             this.isDrawing=true;}
+            this.context.strokeRect(x,y,lastx-x,lasty-y);
+             this.rectangle();
        }
       }
     } 
@@ -58,45 +56,38 @@ export class SHAPESComponent implements OnInit {
         lastx=event.clientX;
         lasty=event.clientY; 
         console.log(x,y);
-          if(!this.isDrawing){
-           this.context.strokeRect(x,y,lastx-x,lastx-x);
-           lastx=lasty=0;
-           this.isDrawing=true;}
+            this.context.strokeRect(x,y,lastx-x,lastx-x);
+           this.square();
      }
     } 
     
    }
+    drawLine() {
+    let prevX=0
+    let prevY=0;
+    let currX=0;
+    let currY=0;
+    console.log("ana hna");
+    onmousedown=(event:MouseEvent)=>{ prevX=event.clientX; prevY=event.clientY;
+    console.log(prevX,prevY);
+    onmousedown=(ev :MouseEvent)=>{ currX=ev.clientX; currY=ev.clientY;
+      console.log(prevX,currX,currY);
+      this.context.beginPath();
+      this.context.moveTo(prevX, prevY);   
+    this.context.lineTo(currX, currY);
+    
+    this.context.strokeStyle = "black";
+    this.context.lineWidth = 2;
+    this.context.stroke();
+    this.context.closePath();
+    this.drawLine();
+   }}
+    }
   }
-  /**private paint: boolean;
-
-  private clickX: number[] = [];
-  private clickY: number[] = [];
-  private clickDrag: boolean[] = [];
+  
 
 
 
-
-
- circle(event :any){
-var x = event.clientX;
- var y = event.clientY;
- var offsetX = event.offsetX;
- var offsetY = event.offsetY;
- //alert(x, y, offsetX, offsetY);
-
- /// These are the 2 new lines, see you target the canvas element then apply it to getContext
- var canvasElement = <HTMLCanvasElement>document.getElementById("canvas");
- var ctx = canvasElement.getContext("2d");
-
-  //draw a circle
-  if(ctx){
-  ctx.beginPath();
-  ctx.arc(x, y, 10, 0, Math.PI*2, true);
-  ctx.closePath();
-  ctx.fill();}}
-
-
-}*/
 function getCanvasRenderingContext2D(arg0: any): CanvasRenderingContext2D {
   throw new Error('Function not implemented.');
 }
