@@ -166,7 +166,7 @@ export class SHAPESComponent implements OnInit {
     let prevY=0;
     let currX=0;
     let currY=0;
-    console.log("ana hna");
+    
     onmousedown=(event:MouseEvent)=>{ prevX=event.clientX; prevY=event.clientY;
     console.log(prevX,prevY);
     onmousedown=(ev :MouseEvent)=>{ currX=ev.clientX; currY=ev.clientY;
