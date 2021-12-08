@@ -10,10 +10,12 @@ public class Circle extends Shape {
 
 
 
-    public Circle(Point center, Point second) {
+    public Circle(Point center, Point second,String color) {
         this.center = center;
         this.second = second;
         this.radius = Math.sqrt((Math.pow((center.x-second.x),2)+Math.pow((center.y-second.y),2)));
+        this.name = "circle";
+        this.color = color;
     }
 
     public void setRadius(int radius) {

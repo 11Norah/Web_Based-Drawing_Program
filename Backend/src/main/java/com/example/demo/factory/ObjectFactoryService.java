@@ -12,20 +12,20 @@ public class ObjectFactoryService implements ObjectFactoryI {
 
 
     @Override
-    public ShapeI getObject(String name, Point first, Point second, Point third) {
+    public ShapeI getObject(String name,String color, Point first, Point second, Point third) {
         switch (name) {
             case "rectangle":
-                return new Rectangle(first,second);
+                return new Rectangle(first,second,color);
             case "square":
-                return new Square(first,second);
+                return new Square(first,second,color);
             case "triangle":
                 return new Triangle();
             case "ellipse":
-                return new Ellipse(first,second,third);
+                return new Ellipse(first,second,third,color);
             case "line":
-                return new Line(first,second);
+                return new Line(first,second,color);
             case "circle":
-                return new Circle(first,second);
+                return new Circle(first,second,color);
             default:
                 throw new NullPointerException();
         }

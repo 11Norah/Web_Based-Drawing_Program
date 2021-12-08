@@ -8,10 +8,12 @@ public class Square extends Shape  {
     private Point topLeft,bottomRight;
     private int length;
 
-    public Square(Point topLeft, Point bottomRight) {
+    public Square(Point topLeft, Point bottomRight,String color) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
         this.length = Math.abs(topLeft.x-bottomRight.x);
+        this.name = "square";
+        this.color = color;
     }
 
     public int getLength() {

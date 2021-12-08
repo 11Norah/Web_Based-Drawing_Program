@@ -8,10 +8,12 @@ public class Ellipse extends Shape  {
     private int r1,r2;
     private Point center,p1,p2;
 
-    public Ellipse(Point center, Point p1, Point p2) {
+    public Ellipse(Point center, Point p1, Point p2,String color) {
         this.center = center;
         this.p1 = p1;
         this.p2 = p2;
+        this.name = "ellipse";
+        this.color = color;
     }
 
     public int getR1() {

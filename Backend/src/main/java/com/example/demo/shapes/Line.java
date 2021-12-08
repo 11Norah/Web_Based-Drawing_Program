@@ -8,10 +8,12 @@ public class Line extends Shape implements ResponseObjectI {
     private Point p1, p2;
     private double length;
 
-    public Line(Point p1, Point p2) {
+    public Line(Point p1, Point p2,String Color) {
         this.p1 = p1;
         this.p2 = p2;
         this.length = Math.sqrt((Math.pow((p1.x-p2.x),2)+Math.pow((p1.y-p2.y),2)));
+        this.name = "line";
+        this.color = color;
     }
 
     public double getLength() {

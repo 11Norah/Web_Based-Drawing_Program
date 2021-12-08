@@ -21,8 +21,8 @@ public class Controller {
     ObjectFactoryService factory;
 
     @PostMapping
-    public void integration(@RequestBody String name, @RequestBody Point first, @RequestBody Point second, @RequestBody Point third) {
-        serve.addToDP(factory.getObject(name,first,second,third));
+    public void integration(@RequestBody String name,@RequestBody String color, @RequestBody Point first, @RequestBody Point second, @RequestBody Point third) {
+        serve.addToDP(factory.getObject(name,color,first,second,third));
 
     }
 

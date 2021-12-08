@@ -8,11 +8,13 @@ public class Rectangle extends Shape  {
     private int width,height;
     private Point topLeft,bottomRight;
 
-    public Rectangle(Point topLeft, Point bottomRight) {
+    public Rectangle(Point topLeft, Point bottomRight,String color) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
         this.width = Math.abs(topLeft.y-bottomRight.y);
         this.height = Math.abs(topLeft.x-bottomRight.x);
+        this.name = "rectangle";
+        this.color = color;
     }
 
     public Point getTopLeft() {
