@@ -32,11 +32,11 @@ export class SHAPESComponent implements OnInit {
       let lasty=0;
       let lastx=0;
       onmousedown = (event: MouseEvent) => {
-         x=event.clientX;
-         y=event.clientY;
+         x=event.offsetX;
+         y=event.offsetY;
          onmousedown = (event: MouseEvent) => {
-          lastx=event.clientX;
-          lasty=event.clientY;
+          lastx=event.offsetX;
+          lasty=event.offsetY;
           console.log(x,y);
             this.context.strokeRect(x,y,lastx-x,lasty-y);
              this.rectangle();
@@ -50,11 +50,11 @@ export class SHAPESComponent implements OnInit {
     let lasty=0;
     let lastx=0;
     onmousedown = (event: MouseEvent) => { 
-       x=event.clientX;
-       y=event.clientY;
+       x=event.offsetX;
+       y=event.offsetY;
        onmousedown = (event: MouseEvent) => { 
-        lastx=event.clientX;
-        lasty=event.clientY; 
+        lastx=event.offsetX;
+        lasty=event.offsetY; 
         console.log(x,y);
             this.context.strokeRect(x,y,lastx-x,lastx-x);
            this.square();
@@ -72,11 +72,11 @@ export class SHAPESComponent implements OnInit {
       let m1=0;
       let m2=0;
       onmousedown = (event: MouseEvent) => { 
-         x=event.clientX;
-         y=event.clientY;
+         x=event.offsetX;
+         y=event.offsetY;
          onmousedown = (event: MouseEvent) => { 
-          lastx=event.clientX;
-          lasty=event.clientY; 
+          lastx=event.offsetX;
+          lasty=event.offsetY; 
           
           console.log(x,y);
           radious=Math.sqrt(Math.pow((lastx-x),2)+Math.pow((lasty-y),2));
@@ -100,14 +100,14 @@ export class SHAPESComponent implements OnInit {
       let x2=0;
       let y2=0;
       onmousedown = (event: MouseEvent) => { 
-         x=event.clientX;
-         y=event.clientY;
+         x=event.offsetX;
+         y=event.offsetY;
          onmousedown = (event: MouseEvent) => { 
-          lastx=event.clientX;
-          lasty=event.clientY; 
+          lastx=event.offsetX;
+          lasty=event.offsetY; 
           onmousedown=(event:MouseEvent)=>{
-            x2=event.clientX;
-            y2=event.clientY;
+            x2=event.offsetX;
+            y2=event.offsetY;
       
           console.log(x,y);
           console.log(x2,y2);
@@ -136,14 +136,14 @@ export class SHAPESComponent implements OnInit {
     let x2=0;
     let y2=0;
     onmousedown = (event: MouseEvent) => { 
-       x=event.clientX;
-       y=event.clientY;
+       x=event.offsetX;
+       y=event.offsetY;
        onmousedown = (event: MouseEvent) => { 
-        lastx=event.clientX;
-        lasty=event.clientY; 
+        lastx=event.offsetX;
+        lasty=event.offsetY; 
         onmousedown=(event:MouseEvent)=>{
-          x2=event.clientX;
-          y2=event.clientY;
+          x2=event.offsetX;
+          y2=event.offsetY;
     
         
         this.context.beginPath();
@@ -167,9 +167,9 @@ export class SHAPESComponent implements OnInit {
     let currX=0;
     let currY=0;
     
-    onmousedown=(event:MouseEvent)=>{ prevX=event.clientX; prevY=event.clientY;
+    onmousedown=(event:MouseEvent)=>{ prevX=event.offsetX; prevY=event.offsetY;
     console.log(prevX,prevY);
-    onmousedown=(ev :MouseEvent)=>{ currX=ev.clientX; currY=ev.clientY;
+    onmousedown=(ev :MouseEvent)=>{ currX=ev.offsetX; currY=ev.offsetY;
       console.log(prevX,currX,currY);
       this.context.beginPath();
       this.context.moveTo(prevX, prevY);   
