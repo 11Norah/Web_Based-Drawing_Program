@@ -1,15 +1,17 @@
+package com.example.demo.Model;
+
 import java.util.Stack;
-import com.example.demo.shapes
+import com.example.demo.shapes.ShapeI;
 public class DrawnShapes implements DrawnShapesI {
     Stack<ShapeI> drawnShapes;
     Stack<ShapeI> undoneShapes;
 
     DrawnShapes() {
-        this.drawnshapes = new Stack<ShapeI>();
-        this.undoneShapes = new Stack<ShapeI>();
+        this.drawnShapes = new Stack<>();
+        this.undoneShapes = new Stack<>();
     }
 
-    void undoShapes() throws EmptyStackException {
+    public void undoShapes() {
         if(!drawnShapes.empty()) {
             undoneShapes.push(drawnShapes.pop());
         }
@@ -18,11 +20,11 @@ public class DrawnShapes implements DrawnShapesI {
         }
     }
 
-    void addShape(ShapeI shape) {
+    public void addShape(ShapeI shape) {
         drawnShapes.push(shape);
     }
 
-    void redoShape() {
+    public void redoShape() {
         if(!undoneShapes.empty()) {
             drawnShapes.push(undoneShapes.pop());
         }
@@ -31,11 +33,11 @@ public class DrawnShapes implements DrawnShapesI {
         }
     }
 
-    DrawnShapesI loadDrawnShapes(String name) {
-
+    public DrawnShapesI loadDrawnShapes(String name) {
+        return this;
     }
 
-    void saveDrawnShapes(String name) {
+    public void saveDrawnShapes(String name) {
 
     }
 }
