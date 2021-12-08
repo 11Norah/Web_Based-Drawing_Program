@@ -1,12 +1,16 @@
 package com.example.demo.Model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Stack;
 import com.example.demo.shapes.ShapeI;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class DrawnShapes implements DrawnShapesI {
     Stack<ShapeI> drawnShapes;
     Stack<ShapeI> undoneShapes;
 
-    DrawnShapes() {
+    public DrawnShapes() {
         this.drawnShapes = new Stack<>();
         this.undoneShapes = new Stack<>();
     }
@@ -34,10 +38,19 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
     public DrawnShapesI loadDrawnShapes(String name) {
+        ObjectMapper mapper = new ObjectMapper();
+
         return this;
     }
 
-    public void saveDrawnShapes(String name) {
-
+    public boolean saveDrawnShapes(String name) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File("./"+name), drawnShapes);
+        }
+        catch(IOException exception) {
+            return false;
+        }
+        return true;
     }
 }
