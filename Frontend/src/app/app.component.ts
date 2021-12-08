@@ -36,7 +36,20 @@ export class AppComponent  {
   clearCanvas() {
     var m = confirm("Want to clear");
     if (m) {
-        this.context.clearRect(0, 0, 1000, 500);}}
+        this.context.clearRect(0, 0, 1000, 500);}
+}
+   circle():void{
+    const shape_circle= new SHAPES(this.context);
+    shape_circle.circle();
+  }
+  ellipse():void{
+    const shape_ellipse= new SHAPES(this.context);
+    shape_ellipse.ellipse();
+  }
+  triangle():void{
+    const shape_triangle=new SHAPES(this.context);
+    shape_triangle.triangle();
+  }
 }
 
 
