@@ -34,5 +34,11 @@ public class ShapeService {
     public void move(int index, Point click) {
         drawnShapes.move(index, click);
     }
+    public void copy(int index, Point click) {
+        drawnShapes.copy(index, click);
+    }
+    public void delete(int index) {
+        drawnShapes.delete(index);
+    }
 
 }

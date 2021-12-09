@@ -98,12 +98,22 @@ public class DrawnShapes implements DrawnShapesI {
         responses.add(tempResponse);
     }
 
-    public void copy() {
-
+    public void copy(int index,Point click) {
+        ShapeI originalShape,newShape;
+        ResponseObject tempResponse;
+        originalShape = drawnShapes.get(index);
+        drawnShapes.get(index).afterMove(click);
+        newShape = drawnShapes.get(index);
+        drawnShapes.remove(index);
+        drawnShapes.add(index,originalShape);
+        drawnShapes.add(newShape);
+        tempResponse = new ResponseObject(newShape.getName(),newShape.getColor(),newShape.getPoints()[0],newShape.getPoints()[1],newShape.getPoints()[2] );
+        responses.add(tempResponse);
     }
 
-    public void delete() {
-
+    public void delete(int index) {
+        drawnShapes.remove(index);
+        responses.remove(index);
     }
 
 }

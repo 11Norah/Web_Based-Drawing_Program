@@ -32,9 +32,28 @@ public class Controller {
             serve.move(index,click);
             //move is done, return the new response array
         }
-        else{
-            //do Nothing
+        //do Nothing
+
+    }
+    @PostMapping("/copy")
+    public void copy(@RequestBody Point click) {
+        int index = serve.checkCoordinate(click);
+        if( index != -1){
+            serve.copy(index,click);
+            //copy is done, return the new response array
         }
+        //do Nothing
+
+    }
+    @PostMapping("/delete")
+    public void delete(@RequestBody Point click) {
+        int index = serve.checkCoordinate(click);
+        if( index != -1){
+            serve.delete(index);
+            //delete is done, return the new response array
+        }
+        //do Nothing
+
     }
 
 }
