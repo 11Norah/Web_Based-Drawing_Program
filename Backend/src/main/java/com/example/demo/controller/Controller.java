@@ -54,5 +54,15 @@ public class Controller {
         //do Nothing
 
     }
+    @PostMapping("/resize")
+    public void resize(@RequestBody Point click,@RequestBody Point p1,@RequestBody Point p2) {
+        int index = serve.checkCoordinate(click);
+        if( index != -1){
+            serve.resize(index,p1,p2);
+            //delete is done, return the new response array
+        }
+        //do Nothing
+
+    }
 
 }

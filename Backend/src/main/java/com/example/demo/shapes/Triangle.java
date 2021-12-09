@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Triangle extends Shape implements ShapeI {
     private Point first, second, third;
 
-    public Triangle() {}
 
     public Triangle(Point first, Point second, Point third, String color) {
         this.first = first;
@@ -44,6 +43,12 @@ public class Triangle extends Shape implements ShapeI {
         arr[1] = second;
         arr[2] = third;
         return arr;
+    }
+
+    @Override
+    public void resize(Point p1, Point p2) {
+        this.second = p1;
+        this.third = p2;
     }
 
 

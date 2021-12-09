@@ -14,26 +14,9 @@ public class Ellipse extends Shape implements ShapeI {
         this.p2 = p2;
         this.name = "ellipse";
         this.color = color;
-        this.maxR = Math.sqrt(Math.pow((center.getX() - p1.getX()), 2) + Math.pow((center.getY() - p1.getY()), 2));
-        this.minR = Math.sqrt(Math.pow((center.getX() - p2.getX()), 2) + Math.pow((center.getY() - p2.getY()), 2));
-        bSquare = ((Math.pow((p2.getX() - center.getX()), 2) * Math.pow((p1.getY() - center.getY()), 2)) - (Math.pow((p1.getX() - center.getX()), 2) * Math.pow((p2.getY() - center.getY()), 2))) / (Math.pow((p2.getX() - center.getX()), 2) - Math.pow((p1.getX() - center.getX()), 2));
-        aSquare = (bSquare * Math.pow((p1.getX() - center.getX()), 2)) / (bSquare - Math.pow((p1.getY() - center.getY()), 2));
-        isHorizontal = aSquare >= bSquare;
-        isVertical = !isHorizontal;
-
+        constructEllipse();
     }
 
-    public double getMaxR() {
-        return this.maxR;
-    }
-
-    public double getMinR() {
-        return this.minR;
-    }
-
-    public Point getCenter() {
-        return center;
-    }
 
     @Override
     public void afterMove(Point newCenter) {
@@ -66,5 +49,20 @@ public class Ellipse extends Shape implements ShapeI {
         arr[1] = p1;
         arr[2] = p2;
         return arr;
+    }
+    public void constructEllipse(){
+        this.maxR = Math.sqrt(Math.pow((center.getX() - p1.getX()), 2) + Math.pow((center.getY() - p1.getY()), 2));
+        this.minR = Math.sqrt(Math.pow((center.getX() - p2.getX()), 2) + Math.pow((center.getY() - p2.getY()), 2));
+        bSquare = ((Math.pow((p2.getX() - center.getX()), 2) * Math.pow((p1.getY() - center.getY()), 2)) - (Math.pow((p1.getX() - center.getX()), 2) * Math.pow((p2.getY() - center.getY()), 2))) / (Math.pow((p2.getX() - center.getX()), 2) - Math.pow((p1.getX() - center.getX()), 2));
+        aSquare = (bSquare * Math.pow((p1.getX() - center.getX()), 2)) / (bSquare - Math.pow((p1.getY() - center.getY()), 2));
+        isHorizontal = aSquare >= bSquare;
+        isVertical = !isHorizontal;
+    }
+
+    @Override
+    public void resize(Point p1, Point p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+        constructEllipse();
     }
 }

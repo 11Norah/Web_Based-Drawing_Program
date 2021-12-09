@@ -112,5 +112,8 @@ public class DrawnShapes implements DrawnShapesI {
         drawnShapes.remove(index);
         responses.remove(index);
     }
+    public void resize(int index,Point p1,Point p2) {
+        drawnShapes.get(index).resize(p1,p2);
+    }
 
 }

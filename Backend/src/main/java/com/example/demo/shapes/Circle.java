@@ -3,7 +3,7 @@ package com.example.demo.shapes;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-public class Circle extends Shape {
+public class Circle extends Shape implements ShapeI {
     double radius;
     Point center, second;
 
@@ -51,10 +51,17 @@ public class Circle extends Shape {
         return arr;
     }
 
+    @Override
+    public void resize(Point p1, Point p2) {
+        this.second = p1;
+        this.radius = Math.sqrt((Math.pow((center.getX() - second.getX()), 2) + Math.pow((center.getY() - second.getY()), 2)));
+    }
+
     public void afterMove(Point newCenter) {
         this.center = newCenter;
         this.second.setX(newCenter.getX());
         this.second.setY(newCenter.getY() + radius);
     }
+
 
 }
