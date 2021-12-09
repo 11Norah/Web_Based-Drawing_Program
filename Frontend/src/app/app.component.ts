@@ -37,8 +37,14 @@ private colorchanged:string;
   }  
   clearCanvas() {
     var m = confirm("Want to clear");
+    var x,y;
     if (m) {
-        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);}
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        onmousedown=(event:MouseEvent)=>{
+          x=event.offsetX;
+          y=event.offsetY;
+        }
+      }
       }
 
   circle():void{
