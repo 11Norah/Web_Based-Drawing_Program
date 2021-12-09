@@ -8,12 +8,12 @@
     
   <canvas  #canvas width="1000" height="500" style="border:2px solid;"></canvas>
     <div style="position:absolute;top:12%;left:83%;">Choose Color</div>
-    <div style="position:absolute;top:15%;left:85%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
-    <div style="position:absolute;top:15%;left:86%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
-    <div style="position:absolute;top:15%;left:87%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
-    <div style="position:absolute;top:17%;left:85%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
-    <div style="position:absolute;top:17%;left:86%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
-    <div style="position:absolute;top:17%;left:87%;width:10px;height:10px;background:black;" id="black" onclick="color(this)"></div>
+    <div style="position:absolute;top:15%;left:85%;width:10px;height:10px;background:green;"  (click)="color('green')"></div>
+    <div style="position:absolute;top:15%;left:86%;width:10px;height:10px;background:blue;" (click)="color('blue')"></div>
+    <div style="position:absolute;top:15%;left:87%;width:10px;height:10px;background:red;" (click)="color('red')"></div>
+    <div style="position:absolute;top:17%;left:85%;width:10px;height:10px;background:yellow;" (click)="color('yellow')"></div>
+    <div style="position:absolute;top:17%;left:86%;width:10px;height:10px;background:orange;"  (click)="color('orange')"></div>
+    <div style="position:absolute;top:17%;left:87%;width:10px;height:10px;background:black;"  (click)="color('black')"></div>
     <div style="position:absolute;top:20%;left:83%;">Eraser</div>
     <div > <button  (click)="rectangle()"><span style='font-size:60px;'>&#9645;</span></button>
          <button  (click)="circle()"><span style='font-size:60px;'>&#9711;</span></button>
@@ -21,7 +21,7 @@
       <button  (click)="triangle()"><span style='font-size:60px;'>&#9651;</span></button>
      <button  (click)="line()"><span style='font-size:60px;'>──</span></button>
      <button  (click)="ellipse()"><span style='font-size:60px;'>&#11055;</span></button></div>
-    <div style="position:absolute;top:22%;left:85%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+    <div style="position:absolute;top:22%;left:85%;width:15px;height:15px;background:white;border:2px solid;"  (click)="color('white')"></div>
     <img style="position:absolute;top:10%;left:52%;" style="display:none;">
     <button value="save"  size="35" onclick="save()" style="position:absolute;top:79%;left:10%;">Save</button>
     <button value="clear" size="35" (click)="clearCanvas()" style="position:absolute;top:79%;left:15%;">Clear</button>
