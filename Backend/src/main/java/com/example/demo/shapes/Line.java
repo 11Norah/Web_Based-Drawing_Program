@@ -1,39 +1,25 @@
 package com.example.demo.shapes;
 
 
+import com.example.demo.services.LineServices;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class Line extends Shape implements ShapeI {
     private Point p1, p2;
     private double length, m, c;
     private int type;
 
-    public Line() {}
+    @Autowired
+    LineServices lineServices;
 
     public Line(Point p1, Point p2, String color) {
         this.p1 = p1;
         this.p2 = p2;
-        this.length = Math.sqrt((Math.pow((p1.getX() - p2.getX()), 2) + Math.pow((p1.getY() - p2.getY()), 2)));
         this.name = "line";
         this.color = color;
-        c = (p1.getX() * p2.getY() - p1.getY() * p2.getX()) / (p1.getX() - p2.getX());
-        m = (p1.getY() - c) / p1.getX();
-        if (p1.getY() <= p2.getY() && p1.getX() <= p2.getX()) {
-            this.type = 1;
-        } else if (p1.getY() >= p2.getY() && p1.getX() <= p2.getX()) {
-            this.type = 2;
-        } else if (p1.getY() >= p2.getY() && p1.getX() >= p2.getX()) {
-            this.type = 3;
-        } else if (p1.getY() <= p2.getY() && p1.getX() >= p2.getX()) {
-            this.type = 4;
-        }
+        constructLine();
     }
 
-    public double getLength() {
-        return length;
-    }
-
-    public void setLength(double length) {
-        this.length = length;
-    }
 
     public void setP1(Point p1) {
         this.p1 = p1;
@@ -41,14 +27,6 @@ public class Line extends Shape implements ShapeI {
 
     public void setP2(Point p2) {
         this.p2 = p2;
-    }
-
-    public Point getPoint1() {
-        return p1;
-    }
-
-    public Point getPoint2() {
-        return p2;
     }
 
     @Override
@@ -103,5 +81,17 @@ public class Line extends Shape implements ShapeI {
         arr[1] = p2;
         arr[2] = null;
         return arr;
+    }
+    private void constructLine(){
+        this.length = lineServices.getLength(this.p1,this.p2);
+        this.c = lineServices.getC(this.p1,this.p2);
+        this.m = lineServices.getM(this.p1,this.p2,this.c);
+        this.type = lineServices.detectType(this.p1,this.p2);
+    }
+
+    @Override
+    public void resize(Point p1, Point p2) {
+        this.p2 = p1;
+        constructLine();
     }
 }

@@ -41,5 +41,8 @@ public class ShapeService {
     public void delete(int index) {
         drawnShapes.delete(index);
     }
+    public void resize(int index,Point p1,Point p2) {
+        drawnShapes.resize(index,p1,p2);
+    }
 
 }

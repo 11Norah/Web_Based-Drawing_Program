@@ -13,26 +13,28 @@ public class Rectangle extends Shape implements ShapeI {
     @Autowired
     LineServices lineServices;
 
-    public Rectangle() {}
-
     public Rectangle(Point p1, Point p2, String color) {
         this.p1 = p1;
         this.p2 = p2;
-        this.width = Math.abs(p1.getY() - p2.getY());
-        this.height = Math.abs(p1.getX() - p2.getX());
         this.name = "rectangle";
         this.color = color;
-        maxX = Math.max(p1.getX(), p2.getX());
-        maxY = Math.max(p1.getY(), p2.getY());
-        minX = Math.min(p1.getX(), p2.getX());
-        minY = Math.min(p1.getY(), p2.getY());
-        if (p1.getX() == minX && p1.getY() == minY) {
+        constructRectangle();
+    }
+
+    public void constructRectangle() {
+        this.width = Math.abs(this.p1.getY() - this.p2.getY());
+        this.height = Math.abs(this.p1.getX() - this.p2.getX());
+        this.maxX = Math.max(this.p1.getX(), this.p2.getX());
+        this.maxY = Math.max(this.p1.getY(), this.p2.getY());
+        this.minX = Math.min(this.p1.getX(), this.p2.getX());
+        this.minY = Math.min(this.p1.getY(), this.p2.getY());
+        if (this.p1.getX() == minX && this.p1.getY() == minY) {
             type = 1;
-        } else if (p1.getX() == minX && p1.getY() == maxY) {
+        } else if (this.p1.getX() == minX && this.p1.getY() == maxY) {
             type = 2;
-        } else if (p1.getX() == maxX && p1.getY() == minY) {
+        } else if (this.p1.getX() == maxX && this.p1.getY() == minY) {
             type = 3;
-        } else if (p1.getX() == maxX && p1.getY() == maxY) {
+        } else if (this.p1.getX() == maxX && this.p1.getY() == maxY) {
             type = 4;
         }
     }
@@ -53,13 +55,6 @@ public class Rectangle extends Shape implements ShapeI {
         this.p2 = p2;
     }
 
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
 
     @Override
     public void afterMove(Point click) {
@@ -92,9 +87,15 @@ public class Rectangle extends Shape implements ShapeI {
     @Override
     public Point[] getPoints() {
         Point[] arr = new Point[3];
-        arr[0] = p1;
-        arr[1] = p2;
+        arr[0] = this.p1;
+        arr[1] = this.p2;
         arr[2] = null;
         return arr;
+    }
+
+    @Override
+    public void resize(Point p1, Point p2) {
+        this.p2 = p1;
+        constructRectangle();
     }
 }

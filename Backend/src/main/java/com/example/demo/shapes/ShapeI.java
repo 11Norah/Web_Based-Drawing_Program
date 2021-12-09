@@ -13,5 +13,6 @@ public interface ShapeI {
     public boolean range(Point click);
 
     public Point[] getPoints();
+    public void resize(Point p1,Point p2);
 
 }
