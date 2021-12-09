@@ -1,43 +1,56 @@
 package com.example.demo.shapes;
 
 import com.example.demo.response.ResponseObjectI;
+import com.example.demo.services.LineServices;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.awt.*;
 
-public class Rectangle extends Shape  {
-    private int width,height;
-    private Point topLeft,bottomRight;
+public class Rectangle extends Shape {
+    private double width, height, maxX, maxY, minX, minY;
+    private Point p1, p2;
 
-    public Rectangle(Point topLeft, Point bottomRight,String color) {
-        this.topLeft = topLeft;
-        this.bottomRight = bottomRight;
-        this.width = Math.abs(topLeft.y-bottomRight.y);
-        this.height = Math.abs(topLeft.x-bottomRight.x);
+
+    @Autowired
+    LineServices lineServices;
+
+    public Rectangle(Point p1, Point p2, String color) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.width = Math.abs(p1.getY() - p2.getY());
+        this.height = Math.abs(p1.getX() - p2.getX());
         this.name = "rectangle";
         this.color = color;
+        maxX = Math.max(p1.getX(), p2.getX());
+        maxY = Math.max(p1.getY(), p2.getY());
+        minX = Math.min(p1.getX(), p2.getX());
+        minY = Math.min(p1.getY(), p2.getY());
     }
 
-    public Point getTopLeft() {
-        return topLeft;
+    public Point getP1() {
+        return p1;
     }
 
-    public Point getBottomRight() {
-        return bottomRight;
+    public Point getP2() {
+        return p2;
     }
 
-    public void setTopLeft(Point topLeft) {
-        this.topLeft = topLeft;
+    public void setP1(Point p1) {
+        this.p1 = p1;
     }
 
-    public void setBottomRight(Point bottomRight) {
-        this.bottomRight = bottomRight;
+    public void setP2(Point p2) {
+        this.p2 = p2;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
+    }
+
+    public boolean range(Point click) {
+        return lineServices.checkPoint(new Point(maxX, maxY), new Point(maxX, minY),click ) || lineServices.checkPoint(new Point(maxX, maxY), new Point(minX, maxY),click) || lineServices.checkPoint(new Point(minX, minY), new Point(minX, maxY), click) || lineServices.checkPoint(new Point(minX, minY), new Point(maxX, minY), click);
     }
 }

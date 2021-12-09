@@ -2,18 +2,20 @@ package com.example.demo.shapes;
 
 import com.example.demo.response.ResponseObjectI;
 
-import java.awt.Point;
 
 public class Line extends Shape implements ResponseObjectI {
     private Point p1, p2;
-    private double length;
+    private double length, m, c;
 
-    public Line(Point p1, Point p2,String Color) {
+    public Line(Point p1, Point p2, String Color) {
         this.p1 = p1;
         this.p2 = p2;
-        this.length = Math.sqrt((Math.pow((p1.x-p2.x),2)+Math.pow((p1.y-p2.y),2)));
+        this.length = Math.sqrt((Math.pow((p1.getX() - p2.getX()), 2) + Math.pow((p1.getY() - p2.getY()), 2)));
         this.name = "line";
         this.color = color;
+        c = (p1.getX() * p2.getY() - p1.getY() * p2.getX()) / (p1.getX() - p2.getX());
+        m = (p1.getY() - c) / p1.getX();
+
     }
 
     public double getLength() {
@@ -38,5 +40,15 @@ public class Line extends Shape implements ResponseObjectI {
 
     public Point getPoint2() {
         return p2;
+    }
+
+    public boolean range(Point click) {
+        double y = m * click.getX() + c;
+        double dist1 = Math.pow((p1.getX() - click.getX()), 2) + Math.pow((p1.getY() - click.getY()), 2);
+        double dist2 = Math.pow((p2.getX() - click.getX()), 2) + Math.pow((p2.getY() - click.getY()), 2);
+        if (dist1 <= length && dist2 <= length && click.getY() == y) {
+            return true;
+        }
+        return false;
     }
 }

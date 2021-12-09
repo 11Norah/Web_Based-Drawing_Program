@@ -1,9 +1,5 @@
 package com.example.demo.shapes;
 
-import com.example.demo.response.ResponseObjectI;
-
-import java.awt.*;
-
 public class Circle extends Shape {
     double radius;
     Point center,second;
@@ -13,7 +9,7 @@ public class Circle extends Shape {
     public Circle(Point center, Point second,String color) {
         this.center = center;
         this.second = second;
-        this.radius = Math.sqrt((Math.pow((center.x-second.x),2)+Math.pow((center.y-second.y),2)));
+        this.radius = Math.sqrt((Math.pow((center.getX()-second.getX()),2)+Math.pow((center.getY()-second.getY()),2)));
         this.name = "circle";
         this.color = color;
     }
@@ -32,7 +28,11 @@ public class Circle extends Shape {
         this.center = center;
     }
 
-    public void draw() {
-
+    public boolean range(Point click) {
+        double dist = Math.pow((center.getX()-click.getX()),2)+Math.pow((center.getY()-click.getY()),2);
+        if(dist <= radius*radius){
+            return true;
+        }
+        return false;
     }
 }

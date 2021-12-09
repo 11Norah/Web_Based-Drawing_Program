@@ -1,56 +1,48 @@
 package com.example.demo.Model;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.Stack;
+
 import com.example.demo.shapes.ShapeI;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DrawnShapes implements DrawnShapesI {
-    Stack<ShapeI> drawnShapes;
+    ArrayList<ShapeI> drawnShapes;
     Stack<ShapeI> undoneShapes;
 
-    public DrawnShapes() {
-        this.drawnShapes = new Stack<>();
-        this.undoneShapes = new Stack<>();
+    DrawnShapes() {
+        this.drawnShapes = new ArrayList<ShapeI>();
+        this.undoneShapes = new Stack<ShapeI>();
     }
-
-    public void undoShapes() {
-        if(!drawnShapes.empty()) {
-            undoneShapes.push(drawnShapes.pop());
+    void undoShapes() throws EmptyStackException {
+        if(!drawnShapes.isEmpty()) {
+            int index = drawnShapes.size() - 1;
+            undoneShapes.push(drawnShapes.get(index));
+            drawnShapes.remove(index);
         }
         else {
             System.out.println("Nothing to undo");
         }
     }
 
-    public void addShape(ShapeI shape) {
-        drawnShapes.push(shape);
+    void addShape(ShapeI shape) {
+        drawnShapes.add(shape);
     }
 
-    public void redoShape() {
+    void redoShape() {
         if(!undoneShapes.empty()) {
-            drawnShapes.push(undoneShapes.pop());
+            drawnShapes.add(undoneShapes.pop());
         }
         else {
             System.out.println("Nothing to redo");
         }
     }
 
-    public DrawnShapesI loadDrawnShapes(String name) {
-        ObjectMapper mapper = new ObjectMapper();
+   /* DrawnShapesI loadDrawnShapes(String name) {
 
-        return this;
-    }
+    }*/
 
-    public boolean saveDrawnShapes(String name) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writeValue(new File("./"+name), drawnShapes);
-        }
-        catch(IOException exception) {
-            return false;
-        }
-        return true;
+    void saveDrawnShapes(String name) {
+
     }
 }
