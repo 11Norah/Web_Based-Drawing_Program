@@ -1,9 +1,13 @@
 package com.example.demo.shapes;
 
-public class Circle extends Shape implements ShapeI {
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+public class Circle extends Shape {
     double radius;
     Point center, second;
 
+    public Circle() {}
 
     public Circle(Point center, Point second, String color) {
         this.center = center;
@@ -17,7 +21,7 @@ public class Circle extends Shape implements ShapeI {
         this.radius = radius;
     }
 
-    public double getR() {
+    public double getRadius() {
         return radius;
     }
 

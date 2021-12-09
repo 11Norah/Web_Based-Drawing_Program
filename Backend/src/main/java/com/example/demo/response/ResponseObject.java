@@ -9,6 +9,8 @@ public class ResponseObject {
     private String color;
     private Point p1,p2,p3;
 
+    public ResponseObject() {}
+
     public ResponseObject(String name, String color, Point p1, Point p2, Point p3) {
         this.name = name;
         this.color = color;

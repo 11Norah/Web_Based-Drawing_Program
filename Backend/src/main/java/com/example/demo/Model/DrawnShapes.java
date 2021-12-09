@@ -3,20 +3,18 @@ package com.example.demo.Model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.*;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DrawnShapes implements DrawnShapesI {
-    private List<ShapeI> drawnShapes;
-    private List<ShapeI> undoneShapes;
+    private ShapesList drawnShapes;
+    private ShapesList undoneShapes;
     private ObjectMapper mapper;
     private List<ResponseObject> responses;
 
@@ -32,11 +30,10 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
     public DrawnShapes() {
-        this.drawnShapes = new ArrayList<>();
-        this.undoneShapes = new ArrayList<>();
+        this.drawnShapes = new ShapesList();
+        this.undoneShapes = new ShapesList();
         this.responses = new ArrayList<>();
         mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     public void addResponse(String name, String color, Point first, Point second, Point third) {
@@ -52,7 +49,7 @@ public class DrawnShapes implements DrawnShapesI {
         }
     }
 
-    public void addShape(ShapeI shape) {
+    public void addShape(Shape shape) {
         drawnShapes.add(shape);
     }
 
@@ -66,28 +63,28 @@ public class DrawnShapes implements DrawnShapesI {
 
     public JSONArray loadDrawnShapes(String path) {
         try {
-            ShapeI[] shapes = mapper.readValue(new File(path), Shape[].class);
+            drawnShapes = mapper.readValue(new File(path), ShapesList.class);
             System.out.println("File loaded successfully");
             undoneShapes.clear();
-            drawnShapes = Arrays.asList(shapes);
         } catch (Exception exception) {
-            System.out.println(exception);
+            System.out.println("Failed to load file");
         }
         return new JSONArray(drawnShapes);
     }
 
     public boolean saveDrawnShapes(String path) {
-        ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File(path), drawnShapes);
+            System.out.println("File saved successfully");
         } catch (IOException exception) {
+            System.out.println("Failed to save file");
             return false;
         }
         return true;
     }
 
     public void move(int index,Point click) {
-        ShapeI tempShape;
+        Shape tempShape;
         ResponseObject tempResponse;
         drawnShapes.get(index).afterMove(click);
         tempShape = drawnShapes.get(index);
@@ -99,7 +96,7 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
     public void copy(int index,Point click) {
-        ShapeI originalShape,newShape;
+        Shape originalShape,newShape;
         ResponseObject tempResponse;
         originalShape = drawnShapes.get(index);
         drawnShapes.get(index).afterMove(click);

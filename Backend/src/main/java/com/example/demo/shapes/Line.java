@@ -6,6 +6,8 @@ public class Line extends Shape implements ShapeI {
     private double length, m, c;
     private int type;
 
+    public Line() {}
+
     public Line(Point p1, Point p2, String color) {
         this.p1 = p1;
         this.p2 = p2;

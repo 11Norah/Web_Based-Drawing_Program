@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.Model.DrawnShapes;
 import com.example.demo.shapes.Point;
+import com.example.demo.shapes.Shape;
 import com.example.demo.shapes.ShapeI;
 import com.example.demo.Model.DrawnShapesI;
 
@@ -15,7 +16,7 @@ public class ShapeService {
     @Autowired
     DrawnShapes drawnShapes;
 
-    public void add(ShapeI shape) {
+    public void add(Shape shape) {
         drawnShapes.addShape(shape);
     }
 

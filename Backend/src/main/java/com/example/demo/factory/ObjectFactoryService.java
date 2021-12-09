@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class ObjectFactoryService implements ObjectFactoryI {
 
 
-    public ShapeI getObject(String name,String color, Point first, Point second, Point third) {
+    public Shape getObject(String name,String color, Point first, Point second, Point third) {
         switch (name) {
             case "rectangle":
                 return new Rectangle(first,second,color);

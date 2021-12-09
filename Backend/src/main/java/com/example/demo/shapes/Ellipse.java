@@ -6,6 +6,7 @@ public class Ellipse extends Shape implements ShapeI {
     private Point center, p1, p2;
     private boolean isHorizontal, isVertical;
 
+    public Ellipse() {}
 
     public Ellipse(Point center, Point p1, Point p2, String color) {
         this.center = center;

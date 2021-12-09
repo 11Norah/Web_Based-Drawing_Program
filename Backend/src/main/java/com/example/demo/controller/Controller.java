@@ -15,10 +15,9 @@ public class Controller {
 
     @Autowired
     ShapeService serve;
+
     @Autowired
     ObjectFactoryService factory;
-    @Autowired
-
 
     @PostMapping("/add")
     public void integration(@RequestBody String name,@RequestBody String color, @RequestBody Point first, @RequestBody Point second, @RequestBody Point third) {
