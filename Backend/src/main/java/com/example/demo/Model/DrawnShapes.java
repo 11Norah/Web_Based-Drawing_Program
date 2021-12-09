@@ -8,6 +8,7 @@ import java.util.List;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.json.JSONArray;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +17,16 @@ public class DrawnShapes implements DrawnShapesI {
     private ShapesList drawnShapes;
     private ShapesList undoneShapes;
     private ObjectMapper mapper;
+    private XmlMapper xmlMapper;
     private List<ResponseObject> responses;
 
+    public DrawnShapes() {
+        this.drawnShapes = new ShapesList();
+        this.undoneShapes = new ShapesList();
+        this.responses = new ArrayList<>();
+        mapper = new ObjectMapper();
+        xmlMapper = new XmlMapper();
+    }
 
     public int checkCoordinate(Point click) {
         for (int i = drawnShapes.size() - 1; i >= 0; i--) {
@@ -27,13 +36,6 @@ public class DrawnShapes implements DrawnShapesI {
             }
         }
         return -1;
-    }
-
-    public DrawnShapes() {
-        this.drawnShapes = new ShapesList();
-        this.undoneShapes = new ShapesList();
-        this.responses = new ArrayList<>();
-        mapper = new ObjectMapper();
     }
 
     public void addResponse(String name, String color, Point first, Point second, Point third) {
@@ -61,21 +63,40 @@ public class DrawnShapes implements DrawnShapesI {
         }
     }
 
-    public JSONArray loadDrawnShapes(String path) {
+    public JSONArray loadDrawnShapes(String path, String fileType) {
         try {
-            drawnShapes = mapper.readValue(new File(path), ShapesList.class);
-            System.out.println("File loaded successfully");
-            undoneShapes.clear();
+            if(fileType.equals("json")) {
+                drawnShapes = mapper.readValue(new File(path), ShapesList.class);
+                System.out.println("File loaded successfully");
+                undoneShapes.clear();
+            }
+            else if(fileType.equals("xml")){
+                drawnShapes = xmlMapper.readValue(new File(path), ShapesList.class);
+                System.out.println("File loaded successfully");
+                undoneShapes.clear();
+            }
+            else {
+                System.out.println("Unsupported type");
+            }
         } catch (Exception exception) {
-            System.out.println("Failed to load file");
+            System.out.println(exception);
         }
-        return new JSONArray(drawnShapes);
+            return new JSONArray(drawnShapes);
     }
 
-    public boolean saveDrawnShapes(String path) {
+    public boolean saveDrawnShapes(String path, String fileType) {
         try {
-            mapper.writeValue(new File(path), drawnShapes);
-            System.out.println("File saved successfully");
+            if(fileType.equals("json")) {
+                mapper.writeValue(new File(path), drawnShapes);
+                System.out.println("File saved successfully");
+            }
+            else if(fileType.equals("xml")) {
+                xmlMapper.writeValue(new File(path), drawnShapes);
+                System.out.println("File saved successfully");
+            }
+            else {
+                System.out.println("Unsupported type");
+            }
         } catch (IOException exception) {
             System.out.println("Failed to save file");
             return false;

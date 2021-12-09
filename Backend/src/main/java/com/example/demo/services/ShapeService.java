@@ -20,8 +20,8 @@ public class ShapeService {
         drawnShapes.addShape(shape);
     }
 
-    public void save(String path) {
-        drawnShapes.saveDrawnShapes(path);
+    public void save(String path, String fileType) {
+        drawnShapes.saveDrawnShapes(path, fileType);
     }
 
     public int checkCoordinate(Point click) {
