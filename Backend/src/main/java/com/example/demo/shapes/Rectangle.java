@@ -1,11 +1,10 @@
 package com.example.demo.shapes;
 
-import com.example.demo.response.ResponseObjectI;
 import com.example.demo.services.LineServices;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class Rectangle extends Shape {
+public class Rectangle extends Shape implements ShapeI{
     private double width, height, maxX, maxY, minX, minY;
     private Point p1, p2;
 
@@ -51,6 +50,6 @@ public class Rectangle extends Shape {
     }
 
     public boolean range(Point click) {
-        return lineServices.checkPoint(new Point(maxX, maxY), new Point(maxX, minY),click ) || lineServices.checkPoint(new Point(maxX, maxY), new Point(minX, maxY),click) || lineServices.checkPoint(new Point(minX, minY), new Point(minX, maxY), click) || lineServices.checkPoint(new Point(minX, minY), new Point(maxX, minY), click);
+        return lineServices.checkPoint(new Point(maxX, maxY), new Point(maxX, minY), click) || lineServices.checkPoint(new Point(maxX, maxY), new Point(minX, maxY), click) || lineServices.checkPoint(new Point(minX, minY), new Point(minX, maxY), click) || lineServices.checkPoint(new Point(minX, minY), new Point(maxX, minY), click);
     }
 }

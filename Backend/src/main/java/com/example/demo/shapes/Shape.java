@@ -29,4 +29,9 @@ public class Shape implements ShapeI {
         points.add(point);
     }
 
+    @Override
+    public boolean range(Point click){
+        return  true;
+    }
+
 }

@@ -10,11 +10,23 @@ import com.example.demo.shapes.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DrawnShapes implements DrawnShapesI {
-    List<ShapeI> drawnShapes;
-    List<ShapeI> undoneShapes;
-    ObjectMapper mapper;
+    private List<ShapeI> drawnShapes;
+    private List<ShapeI> undoneShapes;
+    private ObjectMapper mapper;
+
+    public ShapeI checkCoordinate(Point click) {
+       for(int i = drawnShapes.size()-1;i>=0;i--){
+           ShapeI temp = drawnShapes.get(i);
+           if(temp.range(click)){
+               return temp;
+           }
+       }
+       return null;
+    }
 
     public DrawnShapes() {
         this.drawnShapes = new ArrayList<>();
@@ -24,10 +36,9 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
     public void undoShapes() {
-        if(drawnShapes.size() != 0) {
-            undoneShapes.add(drawnShapes.remove(drawnShapes.size()-1));
-        }
-        else {
+        if (drawnShapes.size() != 0) {
+            undoneShapes.add(drawnShapes.remove(drawnShapes.size() - 1));
+        } else {
             System.out.println("Nothing to undo");
         }
     }
@@ -37,10 +48,9 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
     public void redoShape() {
-        if(undoneShapes.size() != 0) {
-            drawnShapes.add(undoneShapes.remove(drawnShapes.size()-1));
-        }
-        else {
+        if (undoneShapes.size() != 0) {
+            drawnShapes.add(undoneShapes.remove(drawnShapes.size() - 1));
+        } else {
             System.out.println("Nothing to redo");
         }
     }
@@ -51,8 +61,7 @@ public class DrawnShapes implements DrawnShapesI {
             System.out.println("File loaded successfully");
             undoneShapes.clear();
             drawnShapes = Arrays.asList(shapes);
-        }
-        catch(Exception exception) {
+        } catch (Exception exception) {
             System.out.println(exception);
         }
         return new JSONArray(drawnShapes);
@@ -62,10 +71,20 @@ public class DrawnShapes implements DrawnShapesI {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File(path), drawnShapes);
-        }
-        catch(IOException exception) {
+        } catch (IOException exception) {
             return false;
         }
         return true;
     }
+
+    public void move(){
+
+    }
+    public void copy(){
+
+    }
+    public void delete(){
+
+    }
+
 }

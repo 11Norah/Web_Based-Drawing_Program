@@ -1,8 +1,7 @@
 package com.example.demo.shapes;
 
 
-
-public class Ellipse extends Shape {
+public class Ellipse extends Shape implements ShapeI{
     private double maxR, minR, bSquare, aSquare;
     private Point center, p1, p2;
 
@@ -16,7 +15,7 @@ public class Ellipse extends Shape {
         this.maxR = Math.sqrt(Math.pow((center.getX() - p1.getX()), 2) + Math.pow((center.getY() - p1.getY()), 2));
         this.minR = Math.sqrt(Math.pow((center.getX() - p2.getX()), 2) + Math.pow((center.getY() - p2.getY()), 2));
         bSquare = ((Math.pow((p2.getX() - center.getX()), 2) * Math.pow((p1.getY() - center.getY()), 2)) - (Math.pow((p1.getX() - center.getX()), 2) * Math.pow((p2.getY() - center.getY()), 2))) / (Math.pow((p2.getX() - center.getX()), 2) - Math.pow((p1.getX() - center.getX()), 2));
-        aSquare = (bSquare*Math.pow((p1.getX() - center.getX()), 2))/(bSquare-Math.pow((p1.getY() - center.getY()), 2));
+        aSquare = (bSquare * Math.pow((p1.getX() - center.getX()), 2)) / (bSquare - Math.pow((p1.getY() - center.getY()), 2));
     }
 
     public double getMaxR() {

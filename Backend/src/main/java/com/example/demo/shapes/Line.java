@@ -1,9 +1,8 @@
 package com.example.demo.shapes;
 
-import com.example.demo.response.ResponseObjectI;
 
 
-public class Line extends Shape implements ResponseObjectI {
+public class Line extends Shape implements ShapeI {
     private Point p1, p2;
     private double length, m, c;
 
