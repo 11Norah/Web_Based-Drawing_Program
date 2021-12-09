@@ -24,18 +24,15 @@ private colorchanged:string;
 
   rectangle():void{
     const shape_rect=new SHAPES(this.context);
-   shape_rect.newcolour=this.colorchanged;
     shape_rect.rectangle();
   };
   square():void{
     
     const shape_square=new SHAPES(this.context);
-    shape_square.newcolour=this.colorchanged;
     shape_square.square();
   };
   line(){
     const new_line=new SHAPES(this.context);
-    new_line.newcolour=this.colorchanged;
     new_line.drawLine();
   }  
   clearCanvas() {
@@ -46,17 +43,14 @@ private colorchanged:string;
 
   circle():void{
     const shape_circle= new SHAPES(this.context);
-    shape_circle.newcolour=this.colorchanged;
     shape_circle.circle();
   }
   ellipse():void{
     const shape_ellipse= new SHAPES(this.context);
-    shape_ellipse.newcolour=this.colorchanged;
     shape_ellipse.ellipse();
   }
   triangle():void{
     const shape_triangle=new SHAPES(this.context);
-    shape_triangle.newcolour=this.colorchanged;
     shape_triangle.triangle();
   }
   color(obj) { 
