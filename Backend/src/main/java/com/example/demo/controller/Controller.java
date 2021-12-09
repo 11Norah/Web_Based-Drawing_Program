@@ -17,10 +17,24 @@ public class Controller {
     ShapeService serve;
     @Autowired
     ObjectFactoryService factory;
+    @Autowired
 
-    @PostMapping
+
+    @PostMapping("/add")
     public void integration(@RequestBody String name,@RequestBody String color, @RequestBody Point first, @RequestBody Point second, @RequestBody Point third) {
-
+        serve.add(factory.getObject(name,color,first,second,third));
+        serve.addResponse(name,color,first,second,third);
+    }
+    @PostMapping("/move")
+    public void move(@RequestBody Point click) {
+        int index = serve.checkCoordinate(click);
+        if( index != -1){
+            serve.move(index,click);
+            //move is done, return the new response array
+        }
+        else{
+            //do Nothing
+        }
     }
 
 }

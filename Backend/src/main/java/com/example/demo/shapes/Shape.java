@@ -25,13 +25,19 @@ public class Shape implements ShapeI {
     }
 
     @Override
-    public void addPoint(Point point) {
-        points.add(point);
+    public void afterMove(com.example.demo.shapes.Point click) {
+
     }
 
     @Override
-    public boolean range(Point click){
-        return  true;
+    public boolean range(com.example.demo.shapes.Point click) {
+        return false;
     }
+
+    @Override
+    public com.example.demo.shapes.Point[] getPoints() {
+        return new com.example.demo.shapes.Point[0];
+    }
+
 
 }

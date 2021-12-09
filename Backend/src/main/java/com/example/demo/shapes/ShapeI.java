@@ -8,8 +8,10 @@ public interface ShapeI {
 
     public void setColor(String color);
 
-    public void addPoint(Point point);
+    public void afterMove(Point click);
 
     public boolean range(Point click);
+
+    public Point[] getPoints();
 
 }

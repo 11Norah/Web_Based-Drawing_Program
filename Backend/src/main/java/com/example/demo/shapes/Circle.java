@@ -29,6 +29,7 @@ public class Circle extends Shape implements ShapeI {
         this.center = center;
     }
 
+
     public boolean range(Point click) {
         double dist = Math.pow((center.getX() - click.getX()), 2) + Math.pow((center.getY() - click.getY()), 2);
         if (dist <= radius * radius) {
@@ -36,4 +37,20 @@ public class Circle extends Shape implements ShapeI {
         }
         return false;
     }
+
+    @Override
+    public Point[] getPoints() {
+        Point[] arr = new Point[3];
+        arr[0] = center;
+        arr[1] = second;
+        arr[2] = null;
+        return arr;
+    }
+
+    public void afterMove(Point newCenter) {
+        this.center = newCenter;
+        this.second.setX(newCenter.getX());
+        this.second.setY(newCenter.getY() + radius);
+    }
+
 }

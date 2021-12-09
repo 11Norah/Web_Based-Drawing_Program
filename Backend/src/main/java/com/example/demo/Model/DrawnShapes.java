@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,22 +18,30 @@ public class DrawnShapes implements DrawnShapesI {
     private List<ShapeI> drawnShapes;
     private List<ShapeI> undoneShapes;
     private ObjectMapper mapper;
+    private List<ResponseObject> responses;
 
-    public ShapeI checkCoordinate(Point click) {
-       for(int i = drawnShapes.size()-1;i>=0;i--){
-           ShapeI temp = drawnShapes.get(i);
-           if(temp.range(click)){
-               return temp;
-           }
-       }
-       return null;
+
+    public int checkCoordinate(Point click) {
+        for (int i = drawnShapes.size() - 1; i >= 0; i--) {
+            ShapeI temp = drawnShapes.get(i);
+            if (temp.range(click)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public DrawnShapes() {
         this.drawnShapes = new ArrayList<>();
         this.undoneShapes = new ArrayList<>();
+        this.responses = new ArrayList<>();
         mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
+
+    public void addResponse(String name, String color, Point first, Point second, Point third) {
+        ResponseObject response = new ResponseObject(name, color, first, second, third);
+        this.responses.add(response);
     }
 
     public void undoShapes() {
@@ -77,13 +86,23 @@ public class DrawnShapes implements DrawnShapesI {
         return true;
     }
 
-    public void move(){
+    public void move(int index,Point click) {
+        ShapeI tempShape;
+        ResponseObject tempResponse;
+        drawnShapes.get(index).afterMove(click);
+        tempShape = drawnShapes.get(index);
+        drawnShapes.remove(index);
+        drawnShapes.add(tempShape);
+        tempResponse = new ResponseObject(tempShape.getName(),tempShape.getColor(),tempShape.getPoints()[0],tempShape.getPoints()[1],tempShape.getPoints()[2] );
+        responses.remove(index);
+        responses.add(tempResponse);
+    }
+
+    public void copy() {
 
     }
-    public void copy(){
 
-    }
-    public void delete(){
+    public void delete() {
 
     }
 
