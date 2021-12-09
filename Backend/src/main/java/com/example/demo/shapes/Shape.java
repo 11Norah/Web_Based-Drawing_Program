@@ -16,7 +16,7 @@ import java.util.ArrayList;
         @JsonSubTypes.Type(value = Ellipse.class, name = "ellipse"),
         @JsonSubTypes.Type(value = Line.class, name = "line")
 })
-public class Shape {
+public class Shape implements ShapeI{
 
     protected String color;
     protected ArrayList<Point> points;
@@ -33,6 +33,26 @@ public class Shape {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public void afterMove(Point click) {
+
+    }
+
+    @Override
+    public boolean range(Point click) {
+        return false;
+    }
+
+    @Override
+    public Point[] getPoints() {
+        return new Point[0];
+    }
+
+    @Override
+    public void resize(Point p1, Point p2) {
+
     }
 
 
