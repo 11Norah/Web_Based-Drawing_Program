@@ -26,13 +26,19 @@ public class Controller {
 
 
     @PostMapping("/add")
-    public void integration(@RequestBody String name, @RequestBody String color, @RequestBody Point first, @RequestBody Point second, @RequestBody Point third) {
+    public void integration(@RequestBody String name, @RequestBody String color, @RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2,@RequestBody double x3, @RequestBody double y3) {
+        Point first = new Point(x1,y1);
+        Point second = new Point(x2,y2);
+        Point third = new Point(x3,y3);
         serve.add(factory.getObject(name, color, first, second, third));
         serve.addResponse(name, color, first, second, third);
     }
 
+
     @PostMapping("/move")
-    public List<ResponseObject> move(@RequestBody Point click, @RequestBody Point moveTo) {
+    public List<ResponseObject> move(@RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2) {
+        Point click = new Point(x1,y1);
+        Point moveTo = new Point(x2,y2);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.move(index, moveTo);
@@ -42,7 +48,9 @@ public class Controller {
     }
 
     @PostMapping("/copy")
-    public List<ResponseObject> copy(@RequestBody Point click, @RequestBody Point copyTo) {
+    public List<ResponseObject> copy(@RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2) {
+        Point click = new Point(x1,y1);
+        Point copyTo = new Point(x2,y2);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.copy(index, copyTo);
@@ -52,7 +60,8 @@ public class Controller {
     }
 
     @PostMapping("/delete")
-    public List<ResponseObject> delete(@RequestBody Point click) {
+    public List<ResponseObject> delete(@RequestBody double x1, @RequestBody double y1) {
+        Point click = new Point(x1,y1);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.delete(index);
@@ -62,7 +71,10 @@ public class Controller {
     }
 
     @PostMapping("/resize")
-    public List<ResponseObject> resize(@RequestBody Point click, @RequestBody Point p1, @RequestBody Point p2) {
+    public List<ResponseObject> resize(@RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2,@RequestBody double x3, @RequestBody double y3) {
+        Point click = new Point(x1,y1);
+        Point p1 = new Point(x2,y2);
+        Point p2 = new Point(x3,y3);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.resize(index, p1, p2);
