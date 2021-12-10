@@ -7,8 +7,8 @@ import com.example.demo.response.ResponseObject;
 import com.example.demo.services.ShapeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.shapes.*;
 
@@ -25,20 +25,20 @@ public class Controller {
     ObjectFactoryService factory;
 
 
-    @PostMapping("/add")
-    public void integration(@RequestBody String name, @RequestBody String color, @RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2,@RequestBody double x3, @RequestBody double y3) {
-        Point first = new Point(x1,y1);
-        Point second = new Point(x2,y2);
-        Point third = new Point(x3,y3);
+    @GetMapping("/add")
+    public void integration(@RequestParam String name, @RequestParam String color, @RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2, @RequestParam double x3, @RequestParam double y3) {
+        Point first = new Point(x1, y1);
+        Point second = new Point(x2, y2);
+        Point third = new Point(x3, y3);
         serve.add(factory.getObject(name, color, first, second, third));
-        serve.addResponse(name,color,x1,y1,x2,y2,x3,y3);
+        serve.addResponse(name, color, x1, y1, x2, y2, x3, y3);
     }
 
 
-    @PostMapping("/move")
-    public List<ResponseObject> move(@RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2) {
-        Point click = new Point(x1,y1);
-        Point moveTo = new Point(x2,y2);
+    @GetMapping("/move")
+    public List<ResponseObject> move(@RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2) {
+        Point click = new Point(x1, y1);
+        Point moveTo = new Point(x2, y2);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.move(index, moveTo);
@@ -47,10 +47,10 @@ public class Controller {
         return null;
     }
 
-    @PostMapping("/copy")
-    public List<ResponseObject> copy(@RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2) {
-        Point click = new Point(x1,y1);
-        Point copyTo = new Point(x2,y2);
+    @GetMapping("/copy")
+    public List<ResponseObject> copy(@RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2) {
+        Point click = new Point(x1, y1);
+        Point copyTo = new Point(x2, y2);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.copy(index, copyTo);
@@ -59,9 +59,9 @@ public class Controller {
         return null;
     }
 
-    @PostMapping("/delete")
-    public List<ResponseObject> delete(@RequestBody double x1, @RequestBody double y1) {
-        Point click = new Point(x1,y1);
+    @GetMapping("/delete")
+    public List<ResponseObject> delete(@RequestParam double x1, @RequestParam double y1) {
+        Point click = new Point(x1, y1);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.delete(index);
@@ -70,11 +70,11 @@ public class Controller {
         return null;
     }
 
-    @PostMapping("/resize")
-    public List<ResponseObject> resize(@RequestBody double x1, @RequestBody double y1,@RequestBody double x2, @RequestBody double y2,@RequestBody double x3, @RequestBody double y3) {
-        Point click = new Point(x1,y1);
-        Point p1 = new Point(x2,y2);
-        Point p2 = new Point(x3,y3);
+    @GetMapping("/resize")
+    public List<ResponseObject> resize(@RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2, @RequestParam double x3, @RequestParam double y3) {
+        Point click = new Point(x1, y1);
+        Point p1 = new Point(x2, y2);
+        Point p2 = new Point(x3, y3);
         int index = serve.checkCoordinate(click);
         if (index != -1) {
             serve.resize(index, p1, p2);
@@ -82,7 +82,8 @@ public class Controller {
         }
         return null;
     }
-    @PostMapping("/clear")
+
+    @GetMapping("/clear")
     public void clear() {
         serve.clear();
     }
