@@ -16,8 +16,7 @@ public class Triangle extends Shape implements ShapeI {
     }
 
 
-    @Autowired
-    LineServices lineServices;
+    LineServices lineServices = new LineServices();
 
     @Override
     public void afterMove(Point click) {
