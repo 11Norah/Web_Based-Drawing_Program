@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.Model.DrawnShapes;
+import com.example.demo.Model.ShapesList;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.Point;
 import com.example.demo.shapes.Shape;
@@ -25,6 +26,10 @@ public class ShapeService {
     public DrawnShapes getDrawnShapes(){
         return this.drawnShapes;
     }
+    public ShapesList getdrawns(){
+        return this.drawnShapes.getDrawnShapes();
+    }
+
 
     public boolean save(String path, String fileType) {
         return drawnShapes.saveDrawnShapes(path, fileType);

@@ -25,6 +25,7 @@ public class Controller {
     @Autowired
     ObjectFactoryService factory;
 
+    private int index;
 
     @GetMapping("/add")
     public void integration(@RequestParam String name, @RequestParam String color, @RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2, @RequestParam double x3, @RequestParam double y3) {
@@ -35,53 +36,42 @@ public class Controller {
         serve.addResponse(name, color, x1, y1, x2, y2, x3, y3);
     }
 
-
-    @GetMapping("/move")
-    public List<ResponseObject> move(@RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2) {
-        Point click = new Point(x1, y1);
-        Point moveTo = new Point(x2, y2);
-        int index = serve.checkCoordinate(click);
-        if (index != -1) {
-            serve.move(index, moveTo);
-            return serve.getDrawnShapes().getResponses();
+    @GetMapping("/select")
+    public String select(@RequestParam double x, @RequestParam double y) {
+        Point click = new Point(x, y);
+        this.index = serve.checkCoordinate(click);
+        if (this.index != -1) {
+            return serve.getdrawns().get(this.index).getName();
         }
         return null;
+    }
+
+    @GetMapping("/move")
+    public List<ResponseObject> move(@RequestParam double x, @RequestParam double y) {
+        Point moveTo = new Point(x, y);
+        serve.move(this.index, moveTo);
+        return serve.getDrawnShapes().getResponses();
     }
 
     @GetMapping("/copy")
-    public List<ResponseObject> copy(@RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2) {
-        Point click = new Point(x1, y1);
-        Point copyTo = new Point(x2, y2);
-        int index = serve.checkCoordinate(click);
-        if (index != -1) {
-            serve.copy(index, copyTo);
-            return serve.getDrawnShapes().getResponses();
-        }
-        return null;
+    public List<ResponseObject> copy(@RequestParam double x, @RequestParam double y) {
+        Point copyTo = new Point(x, y);
+        serve.copy(this.index, copyTo);
+        return serve.getDrawnShapes().getResponses();
     }
 
     @GetMapping("/delete")
-    public List<ResponseObject> delete(@RequestParam double x1, @RequestParam double y1) {
-        Point click = new Point(x1, y1);
-        int index = serve.checkCoordinate(click);
-        if (index != -1) {
-            serve.delete(index);
-            return serve.getDrawnShapes().getResponses();
-        }
-        return null;
+    public List<ResponseObject> delete() {
+        serve.delete(this.index);
+        return serve.getDrawnShapes().getResponses();
     }
 
     @GetMapping("/resize")
-    public List<ResponseObject> resize(@RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2, @RequestParam double x3, @RequestParam double y3) {
-        Point click = new Point(x1, y1);
-        Point p1 = new Point(x2, y2);
-        Point p2 = new Point(x3, y3);
-        int index = serve.checkCoordinate(click);
-        if (index != -1) {
-            serve.resize(index, p1, p2);
-            return serve.getDrawnShapes().getResponses();
-        }
-        return null;
+    public List<ResponseObject> resize(@RequestParam double x1, @RequestParam double y1, @RequestParam double x2, @RequestParam double y2) {
+        Point p1 = new Point(x1, y1);
+        Point p2 = new Point(x2, y2);
+        serve.resize(this.index, p1, p2);
+        return serve.getDrawnShapes().getResponses();
     }
 
     @GetMapping("/clear")

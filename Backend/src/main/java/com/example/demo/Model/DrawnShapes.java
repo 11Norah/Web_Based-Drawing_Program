@@ -23,6 +23,10 @@ public class DrawnShapes implements DrawnShapesI {
     public List<ResponseObject> getResponses(){
         return this.responses;
     }
+    public ShapesList getDrawnShapes(){
+        return this.drawnShapes;
+    }
+
     public int checkCoordinate(Point click) {
         for (int i = drawnShapes.size() - 1; i >= 0; i--) {
             ShapeI temp = drawnShapes.get(i);
