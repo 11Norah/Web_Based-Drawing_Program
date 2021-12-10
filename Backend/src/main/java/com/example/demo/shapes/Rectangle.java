@@ -13,8 +13,6 @@ public class Rectangle extends Shape implements ShapeI {
     @Autowired
     LineServices lineServices;
 
-    public Rectangle() {}
-
     public Rectangle(Point p1, Point p2, String color) {
         this.p1 = p1;
         this.p2 = p2;

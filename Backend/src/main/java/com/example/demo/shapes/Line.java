@@ -12,8 +12,6 @@ public class Line extends Shape implements ShapeI {
     @Autowired
     LineServices lineServices;
 
-    public Line() {}
-
     public Line(Point p1, Point p2, String color) {
         this.p1 = p1;
         this.p2 = p2;
