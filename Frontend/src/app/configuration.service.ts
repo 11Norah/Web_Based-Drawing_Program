@@ -8,7 +8,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   providedIn: 'root'
 })
 export class ConfigurationService {
-  
+  b:any;
  
   constructor(private http: HttpClient,) {
    }
