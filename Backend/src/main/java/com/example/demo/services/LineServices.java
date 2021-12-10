@@ -13,7 +13,7 @@ public class LineServices {
         double y = m * click.getX() + c;
         double dist1 = Math.pow((p1.getX() - click.getX()), 2) + Math.pow((p1.getY() - click.getY()), 2);
         double dist2 = Math.pow((p2.getX() - click.getX()), 2) + Math.pow((p2.getY() - click.getY()), 2);
-        if (dist1 <= length && dist2 <= length && Math.abs(click.getY() - y) <= 2) {
+        if (Math.sqrt(dist1) <= length && Math.sqrt(dist2)<= length && Math.abs(click.getY() - y) <= 2) {
             return true;
         }
         return false;

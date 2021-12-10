@@ -20,8 +20,8 @@ public class Square extends Shape implements ShapeI {
         constructSquare();
     }
 
-    @Autowired
-    LineServices lineServices;
+
+    LineServices lineServices = new LineServices();
 
     public double getLength() {
         return length;
@@ -73,13 +73,13 @@ public class Square extends Shape implements ShapeI {
         this.maxY = Math.max(this.p1.getY(), this.p2.getY());
         this.minX = Math.min(this.p1.getX(), this.p2.getX());
         this.minY = Math.min(this.p1.getY(), this.p2.getY());
-        if (this.p1.equals(new Point(this.minX, this.minY)) || this.p1.equals(new Point(this.maxX, this.minY))) {
+        if (this.p1.getX() == this.minX && this.p1.getY() == this.minY || this.p1.getX() == this.maxX && this.p1.getY() == this.minY ) {
             first = new Point(this.minX, this.minY);
             second = new Point(this.maxX, this.minY);
             third = new Point(this.minX, this.minY + length);
             forth = new Point(this.maxX, this.minY + length);
 
-        } else if (this.p1.equals(new Point(this.minX, this.maxY)) || this.p1.equals(new Point(this.maxX, this.maxY))) {
+        } else if (this.p1.getX() == this.minX && this.p1.getY() == this.maxY   || this.p1.getX() == this.maxX && this.p1.getY() == this.maxY  ) {
             first = new Point(this.minX, this.maxY - length);
             second = new Point(this.maxX, this.maxY - length);
             third = new Point(this.minX, this.maxY);

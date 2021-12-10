@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResponseObject {
-    private String name;
+    public String name;
     private String color;
     private double x1,y1,x2,y2,x3,y3;
 

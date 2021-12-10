@@ -9,8 +9,8 @@ public class Line extends Shape implements ShapeI {
     private double length, m, c;
     private int type;
 
-    @Autowired
-    LineServices lineServices;
+
+    LineServices lineServices = new LineServices();
 
     public Line(Point p1, Point p2, String color) {
         this.p1 = p1;
@@ -68,7 +68,7 @@ public class Line extends Shape implements ShapeI {
         double y = m * click.getX() + c;
         double dist1 = Math.pow((p1.getX() - click.getX()), 2) + Math.pow((p1.getY() - click.getY()), 2);
         double dist2 = Math.pow((p2.getX() - click.getX()), 2) + Math.pow((p2.getY() - click.getY()), 2);
-        if (dist1 <= length && dist2 <= length && Math.abs(click.getY() - y) <= 2) {
+        if (Math.sqrt(dist1) <= length && Math.sqrt(dist2) <= length && Math.abs(click.getY() - y) <= 2) {
             return true;
         }
         return false;

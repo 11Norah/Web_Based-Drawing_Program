@@ -36,7 +36,7 @@ public class Circle extends Shape implements ShapeI {
 
     public boolean range(Point click) {
         double dist = Math.pow((center.getX() - click.getX()), 2) + Math.pow((center.getY() - click.getY()), 2);
-        if (dist <= radius * radius) {
+        if (Math.abs(Math.sqrt(dist)-radius)<=2) {
             return true;
         }
         return false;

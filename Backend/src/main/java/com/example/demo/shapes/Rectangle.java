@@ -10,8 +10,8 @@ public class Rectangle extends Shape implements ShapeI {
     private int type;
 
 
-    @Autowired
-    LineServices lineServices;
+
+    LineServices lineServices= new LineServices();
 
     public Rectangle(Point p1, Point p2, String color) {
         this.p1 = p1;
