@@ -1,29 +1,42 @@
 <head>
   <title>PAINT</title>
 </head>
-
-
-
 <body >
     
   <canvas  #canvas width="1000" height="500" style="border:2px solid;"></canvas>
-    <div style="position:absolute;top:12%;left:83%;">Choose Color</div>
-    <div style="position:absolute;top:15%;left:85%;width:10px;height:10px;background:green;"  (click)="color('green')"></div>
-    <div style="position:absolute;top:15%;left:86%;width:10px;height:10px;background:blue;" (click)="color('blue')"></div>
-    <div style="position:absolute;top:15%;left:87%;width:10px;height:10px;background:red;" (click)="color('red')"></div>
-    <div style="position:absolute;top:17%;left:85%;width:10px;height:10px;background:yellow;" (click)="color('yellow')"></div>
-    <div style="position:absolute;top:17%;left:86%;width:10px;height:10px;background:orange;"  (click)="color('orange')"></div>
-    <div style="position:absolute;top:17%;left:87%;width:10px;height:10px;background:black;"  (click)="color('black')"></div>
-    <div style="position:absolute;top:20%;left:83%;">Eraser</div>
-    <div > <button  (click)="rectangle()"><span style='font-size:60px;'>&#9645;</span></button>
-         <button  (click)="circle()"><span style='font-size:60px;'>&#9711;</span></button>
-      <button  (click)="square()"><span style='font-size:60px;'>&#9633;</span></button>
-      <button  (click)="triangle()"><span style='font-size:60px;'>&#9651;</span></button>
-     <button  (click)="line()"><span style='font-size:60px;'>──</span></button>
-     <button  (click)="ellipse()"><span style='font-size:60px;'>&#11055;</span></button></div>
-    <div style="position:absolute;top:22%;left:85%;width:15px;height:15px;background:white;border:2px solid;"  (click)="color('white')"></div>
+
+  
+    
     <img style="position:absolute;top:10%;left:52%;" style="display:none;">
-    <button value="save"  size="35" onclick="save()" style="position:absolute;top:79%;left:10%;">Save</button>
-    <button value="clear" size="35" (click)="clearCanvas()" style="position:absolute;top:79%;left:15%;">Clear</button>
-   
+    <div class="shapes">
+    <table style="width: 100px;">
+      <p>Choose color  </p>
+    <tr>
+    
+      </tr>
+      <tr>
+      <td style="background:green; width: 20px; cursor: context-menu;" title="green"  (click)="color('green')"></td>
+      <td style="background:blue;cursor: context-menu;" title="blue"  (click)="color('blue')"></td>
+      <td style="background:red;cursor: context-menu;" title="red"  (click)="color('red')"></td>
+      <td style="background:yellow;cursor: context-menu;" title="yellow"  (click)="color('yellow')"></td>
+      <td style="background:orange;cursor: context-menu;" title="orange"  (click)="color('orange')"></td>
+      <td style="background:black;cursor: context-menu;" title="black"  (click)="color('black')"></td>
+      </tr>
+      <tr><div>Select Shape To Draw</div></tr>
+      <tr>
+      <td class="rect" title="rectangle" (click)="rectangle()">&#9645;</td>
+      <td class="rect" title="square" (click)="square()">&#9633;</td>
+      <td class="rect" title="circle" (click)="circle()">&#9711;</td>
+      <td class="rect" title="ellipse" (click)="ellipse()">&#11055;</td>
+      <td class="rect" title="triangle" (click)="triangle()">&#9651;</td>
+      <td class="rect" title="line" (click)="line()">─</td>
+    </tr>
+    <tr>Editor</tr>
+    <td class="move" (click)="move()">move</td>
+    <td class="copy"  (click)="copy()">copy</td>
+    <td class="resize"  (click)="resize()">resize</td>
+    <td class="save"  (click)="move()">save</td>
+    <td class="clear"  (click)="clearCanvas()">clear</td>
+    </table>
+  </div>
   </body>
