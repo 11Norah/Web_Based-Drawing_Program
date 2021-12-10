@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.Model.DrawnShapes;
+import com.example.demo.Model.DrawnShapesI;
 import com.example.demo.factory.ObjectFactoryService;
+import com.example.demo.response.ResponseObject;
 import com.example.demo.services.ShapeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.shapes.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -19,50 +24,55 @@ public class Controller {
     @Autowired
     ObjectFactoryService factory;
 
+
     @PostMapping("/add")
-    public void integration(@RequestBody String name,@RequestBody String color, @RequestBody Point first, @RequestBody Point second, @RequestBody Point third) {
-        serve.add(factory.getObject(name,color,first,second,third));
-        serve.addResponse(name,color,first,second,third);
+    public void integration(@RequestBody String name, @RequestBody String color, @RequestBody Point first, @RequestBody Point second, @RequestBody Point third) {
+        serve.add(factory.getObject(name, color, first, second, third));
+        serve.addResponse(name, color, first, second, third);
     }
+
     @PostMapping("/move")
-    public void move(@RequestBody Point click) {
+    public List<ResponseObject> move(@RequestBody Point click, @RequestBody Point moveTo) {
         int index = serve.checkCoordinate(click);
-        if( index != -1){
-            serve.move(index,click);
-            //move is done, return the new response array
+        if (index != -1) {
+            serve.move(index, moveTo);
+            return serve.getDrawnShapes().getResponses();
         }
-        //do Nothing
-
+        return null;
     }
+
     @PostMapping("/copy")
-    public void copy(@RequestBody Point click) {
+    public List<ResponseObject> copy(@RequestBody Point click, @RequestBody Point copyTo) {
         int index = serve.checkCoordinate(click);
-        if( index != -1){
-            serve.copy(index,click);
-            //copy is done, return the new response array
+        if (index != -1) {
+            serve.copy(index, copyTo);
+            return serve.getDrawnShapes().getResponses();
         }
-        //do Nothing
-
+        return null;
     }
+
     @PostMapping("/delete")
-    public void delete(@RequestBody Point click) {
+    public List<ResponseObject> delete(@RequestBody Point click) {
         int index = serve.checkCoordinate(click);
-        if( index != -1){
+        if (index != -1) {
             serve.delete(index);
-            //delete is done, return the new response array
+            return serve.getDrawnShapes().getResponses();
         }
-        //do Nothing
-
+        return null;
     }
-    @PostMapping("/resize")
-    public void resize(@RequestBody Point click,@RequestBody Point p1,@RequestBody Point p2) {
-        int index = serve.checkCoordinate(click);
-        if( index != -1){
-            serve.resize(index,p1,p2);
-            //delete is done, return the new response array
-        }
-        //do Nothing
 
+    @PostMapping("/resize")
+    public List<ResponseObject> resize(@RequestBody Point click, @RequestBody Point p1, @RequestBody Point p2) {
+        int index = serve.checkCoordinate(click);
+        if (index != -1) {
+            serve.resize(index, p1, p2);
+            return serve.getDrawnShapes().getResponses();
+        }
+        return null;
+    }
+    @PostMapping("/clear")
+    public void clear() {
+        serve.clear();
     }
 
 }

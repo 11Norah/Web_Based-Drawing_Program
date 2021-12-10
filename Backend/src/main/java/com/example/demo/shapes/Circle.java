@@ -17,7 +17,7 @@ public class Circle extends Shape implements ShapeI {
         this.color = color;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(int radius) {
         this.radius = radius;
     }
 

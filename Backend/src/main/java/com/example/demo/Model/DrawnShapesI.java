@@ -3,8 +3,8 @@ import com.example.demo.shapes.*;
 import org.json.JSONArray;
 
 public interface DrawnShapesI {
-    JSONArray loadDrawnShapes(String path, String fileType);
-    boolean saveDrawnShapes(String path, String fileType);
+    JSONArray loadDrawnShapes(String path);
+    boolean saveDrawnShapes(String path);
     void undoShapes();
     void addShape(Shape shape);
     void redoShape();

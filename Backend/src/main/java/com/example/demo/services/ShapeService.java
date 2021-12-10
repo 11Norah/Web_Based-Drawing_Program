@@ -19,9 +19,12 @@ public class ShapeService {
     public void add(Shape shape) {
         drawnShapes.addShape(shape);
     }
+    public DrawnShapes getDrawnShapes(){
+        return this.drawnShapes;
+    }
 
-    public void save(String path, String fileType) {
-        drawnShapes.saveDrawnShapes(path, fileType);
+    public void save(String path) {
+        drawnShapes.saveDrawnShapes(path);
     }
 
     public int checkCoordinate(Point click) {
@@ -31,7 +34,9 @@ public class ShapeService {
     public void addResponse(String name, String color, Point first, Point second, Point third) {
         drawnShapes.addResponse(name, color, first, second, third);
     }
-
+    public void clear(){
+        drawnShapes.clear();
+    }
     public void move(int index, Point click) {
         drawnShapes.move(index, click);
     }

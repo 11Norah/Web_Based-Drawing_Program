@@ -5,5 +5,5 @@ import com.example.demo.shapes.ShapeI;
 
 import java.util.ArrayList;
 
-public class ShapesList extends ArrayList<Shape> {
+public class ShapesList extends ArrayList<Shape > {
 }
