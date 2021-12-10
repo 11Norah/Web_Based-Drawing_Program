@@ -9,8 +9,7 @@ public class Square extends Shape implements ShapeI {
     private double length, maxX, maxY, minX, minY;
     private int type;
 
-    public Square() {
-    }
+    public Square() {}
 
     public Square(Point p1, Point p2, String color) {
         this.p1 = p1;
