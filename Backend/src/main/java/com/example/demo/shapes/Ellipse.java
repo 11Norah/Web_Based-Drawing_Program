@@ -30,7 +30,7 @@ public class Ellipse extends Shape implements ShapeI {
 
     public boolean range(Point click) {
         double dist = (Math.pow((center.getX() - click.getX()), 2) / (a * a)) + (Math.pow((center.getY() - click.getY()), 2) / (b * b));
-        if (Math.abs(dist - 1) <= .05) {
+        if (Math.abs(dist - 1) <= .1) {
             return true;
         }
         return false;
