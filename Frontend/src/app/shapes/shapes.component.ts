@@ -1,4 +1,4 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
+import { isNull, variable } from '@angular/compiler/src/output/output_ast';
 import { CONTEXT_NAME } from '@angular/compiler/src/render3/view/util';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ConfigurationService } from '../configuration.service';
@@ -69,13 +69,13 @@ export class SHAPESComponent implements OnInit {
          onmousedown = (event: MouseEvent) => {
           lastx=event.offsetX;
           lasty=event.offsetY;
-          console.log(x,y);
+          console.log(x,y); 
           this.context.beginPath();
           console.log(this.colourchanged);
           
             let color =this.hexcolours();
             this.context.strokeRect(x,y,lastx-x,lasty-y);
-            this.SEND.send({x1:x,y1:y},{x2:lastx,y2:lasty},"rectangle",color);
+            this.SEND.send("rectangle",color,x,y,lastx,lasty);
             this.rectangle();
             this.context.beginPath();
        }
@@ -111,7 +111,7 @@ export class SHAPESComponent implements OnInit {
           this.context.beginPath();
               this.context.ellipse(x,y,radiousx,radiousy,Math.PI,0,2*Math.PI);
               this.context.stroke();
-              this.SEND.send_et({x1:x,y1:y},{x2:lastx,y2:lasty},{x3:x2,y3:y2},'ellipse',color);
+              this.SEND.send_et('ellipse',color,x,y,lastx,lasty,x2,y2);
               this.ellipse();
               this.context.closePath();
               
@@ -143,7 +143,7 @@ export class SHAPESComponent implements OnInit {
           let color =this.hexcolours();
               this.context.arc(x,y,radious,0,2*Math.PI);
               this.context.stroke();
-              this.SEND.send({x1:x,y1:y},{x2:lastx,y2:lasty},'circle',color);
+              this.SEND.send('circle',color,x,y,lastx,lasty);
               this.circle();
               this.context.beginPath();
      
@@ -167,7 +167,7 @@ export class SHAPESComponent implements OnInit {
         let color =this.hexcolours();
            this.context.strokeRect(x,y,lastx-x,lastx-x);
            this.context.strokeStyle="black";
-           this.SEND.send({x1:x,y1:y},{x2:lastx,y2:lasty},'square',color);
+           this.SEND.send('square',color,x,y,lastx,lasty);
            this.square();
            this.context.beginPath();
      }
@@ -191,7 +191,7 @@ export class SHAPESComponent implements OnInit {
     this.context.lineWidth = 2;
     this.context.stroke();
     this.context.closePath();
-    this.SEND.send({x1:prevX,y1:prevY},{x2:currX,y2:currY},'line',color);
+    this.SEND.send('line',color,prevX,prevY,currX,currY);
     this.drawLine();
     
     this.context.beginPath();
@@ -226,7 +226,7 @@ triangle(){
           this.context.moveTo(x2,y2);
           this.context.lineTo(x,y);
           this.context.stroke();
-          this.SEND.send_et({x1:x,y1:y},{x2:lastx,y2:lasty},{x3:x2,y3:y2},'triangle',color);
+          this.SEND.send_et('triangle',color,x,y,lastx,lasty,x2,y2);
           this.triangle();
           this.context.closePath();
          
