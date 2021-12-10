@@ -1,12 +1,12 @@
 package com.example.demo.shapes;
 
-
 public class Ellipse extends Shape implements ShapeI {
-    private double maxR, minR, bSquare, aSquare;
+    private double a, b;
     private Point center, p1, p2;
-    private boolean isHorizontal, isVertical;
+    private boolean isHorizontal;
 
-    public Ellipse() {}
+    public Ellipse() {
+    }
 
     public Ellipse(Point center, Point p1, Point p2, String color) {
         this.center = center;
@@ -21,22 +21,16 @@ public class Ellipse extends Shape implements ShapeI {
     @Override
     public void afterMove(Point newCenter) {
         this.center = newCenter;
-        if (isHorizontal) {
-            p1.setX(newCenter.getX());
-            p1.setY(newCenter.getY() + maxR / 2);
-            p2.setY(newCenter.getY());
-            p2.setX(newCenter.getX() - minR / 2);
-        } else {
-            p1.setX(newCenter.getX());
-            p1.setY(newCenter.getY() + minR / 2);
-            p2.setY(newCenter.getY());
-            p2.setX(newCenter.getX() - maxR / 2);
-        }
+        p1.setX(newCenter.getX());
+        p1.setY(newCenter.getY() + a);
+        p2.setY(newCenter.getY());
+        p2.setX(newCenter.getX() + b);
+
     }
 
     public boolean range(Point click) {
-        double dist = (Math.pow((center.getX() - click.getX()), 2) / aSquare) + (Math.pow((center.getY() - click.getY()), 2) / bSquare);
-        if (dist <= 1) {
+        double dist = (Math.pow((center.getX() - click.getX()), 2) / (a * a)) + (Math.pow((center.getY() - click.getY()), 2) / (b * b));
+        if (Math.abs(dist - 1) <= .05) {
             return true;
         }
         return false;
@@ -50,13 +44,11 @@ public class Ellipse extends Shape implements ShapeI {
         arr[2] = p2;
         return arr;
     }
-    public void constructEllipse(){
-        this.maxR = Math.sqrt(Math.pow((center.getX() - p1.getX()), 2) + Math.pow((center.getY() - p1.getY()), 2));
-        this.minR = Math.sqrt(Math.pow((center.getX() - p2.getX()), 2) + Math.pow((center.getY() - p2.getY()), 2));
-        bSquare = ((Math.pow((p2.getX() - center.getX()), 2) * Math.pow((p1.getY() - center.getY()), 2)) - (Math.pow((p1.getX() - center.getX()), 2) * Math.pow((p2.getY() - center.getY()), 2))) / (Math.pow((p2.getX() - center.getX()), 2) - Math.pow((p1.getX() - center.getX()), 2));
-        aSquare = (bSquare * Math.pow((p1.getX() - center.getX()), 2)) / (bSquare - Math.pow((p1.getY() - center.getY()), 2));
-        isHorizontal = aSquare >= bSquare;
-        isVertical = !isHorizontal;
+
+    public void constructEllipse() {
+        this.a = Math.sqrt(Math.pow((center.getX() - p1.getX()), 2) + Math.pow((center.getY() - p1.getY()), 2));
+        this.b = Math.sqrt(Math.pow((center.getX() - p2.getX()), 2) + Math.pow((center.getY() - p2.getY()), 2));
+        isHorizontal = a >= b;
     }
 
     @Override
