@@ -39,8 +39,8 @@ public class DrawnShapes implements DrawnShapesI {
         mapper = new ObjectMapper();
     }
 
-    public void addResponse(String name, String color, Point first, Point second, Point third) {
-        ResponseObject response = new ResponseObject(name, color, first, second, third);
+    public void addResponse(String name, String color, double x1, double y1, double x2, double y2, double x3, double y3) {
+        ResponseObject response = new ResponseObject(name, color, x1,y1,x2,y2,x3,y3);
         this.responses.add(response);
     }
 
@@ -98,7 +98,7 @@ public class DrawnShapes implements DrawnShapesI {
         tempShape = drawnShapes.get(index);
         drawnShapes.remove(index);
         drawnShapes.add(tempShape);
-        tempResponse = new ResponseObject(tempShape.getName(),tempShape.getColor(),tempShape.getPoints()[0],tempShape.getPoints()[1],tempShape.getPoints()[2] );
+        tempResponse = new ResponseObject(tempShape.getName(),tempShape.getColor(),tempShape.getPoints()[0].getX(),tempShape.getPoints()[0].getY(),tempShape.getPoints()[1].getX(),tempShape.getPoints()[1].getY(),tempShape.getPoints()[2].getX(),tempShape.getPoints()[2].getY() );
         responses.remove(index);
         responses.add(tempResponse);
     }
@@ -112,7 +112,7 @@ public class DrawnShapes implements DrawnShapesI {
         drawnShapes.remove(index);
         drawnShapes.add(index,originalShape);
         drawnShapes.add(newShape);
-        tempResponse = new ResponseObject(newShape.getName(),newShape.getColor(),newShape.getPoints()[0],newShape.getPoints()[1],newShape.getPoints()[2] );
+        tempResponse = new ResponseObject(newShape.getName(),newShape.getColor(),newShape.getPoints()[0].getX(),newShape.getPoints()[0].getY(),newShape.getPoints()[1].getX(),newShape.getPoints()[1].getY(),newShape.getPoints()[2].getX(),newShape.getPoints()[2].getY() );
         responses.add(tempResponse);
     }
 

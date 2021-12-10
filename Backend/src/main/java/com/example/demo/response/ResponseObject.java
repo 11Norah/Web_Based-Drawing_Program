@@ -7,15 +7,18 @@ import org.springframework.stereotype.Component;
 public class ResponseObject {
     private String name;
     private String color;
-    private Point p1,p2,p3;
+    private double x1,y1,x2,y2,x3,y3;
 
     public ResponseObject() {}
 
-    public ResponseObject(String name, String color, Point p1, Point p2, Point p3) {
+    public ResponseObject(String name, String color, double x1, double y1, double x2, double y2, double x3, double y3) {
         this.name = name;
         this.color = color;
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.x3 = x3;
+        this.y3 = y3;
     }
 }

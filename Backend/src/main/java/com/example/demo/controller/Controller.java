@@ -31,7 +31,7 @@ public class Controller {
         Point second = new Point(x2,y2);
         Point third = new Point(x3,y3);
         serve.add(factory.getObject(name, color, first, second, third));
-        serve.addResponse(name, color, first, second, third);
+        serve.addResponse(name,color,x1,y1,x2,y2,x3,y3);
     }
 
 

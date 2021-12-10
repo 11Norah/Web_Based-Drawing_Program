@@ -31,8 +31,8 @@ public class ShapeService {
         return drawnShapes.checkCoordinate(click);
     }
 
-    public void addResponse(String name, String color, Point first, Point second, Point third) {
-        drawnShapes.addResponse(name, color, first, second, third);
+    public void addResponse(String name, String color, double x1, double y1, double x2, double y2, double x3, double y3) {
+        drawnShapes.addResponse(name, color, x1,y1,x2,y2,x3,y3);
     }
     public void clear(){
         drawnShapes.clear();
