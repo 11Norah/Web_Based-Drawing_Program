@@ -8,7 +8,7 @@ import java.util.List;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +16,7 @@ public class DrawnShapes implements DrawnShapesI {
     private ShapesList drawnShapes;
     private ShapesList undoneShapes;
     private ObjectMapper mapper;
+    private XmlMapper xmlMapper = new XmlMapper();
     private List<ResponseObject> responses;
 
 
@@ -48,6 +49,7 @@ public class DrawnShapes implements DrawnShapesI {
     public void undoShapes() {
         if (drawnShapes.size() != 0) {
             undoneShapes.add(drawnShapes.remove(drawnShapes.size() - 1));
+            responses.remove(responses.size()-1);
         } else {
             System.out.println("Nothing to undo");
         }
@@ -65,31 +67,68 @@ public class DrawnShapes implements DrawnShapesI {
     public void redoShape() {
         if (undoneShapes.size() != 0) {
             drawnShapes.add(undoneShapes.remove(drawnShapes.size() - 1));
+            Shape shape = drawnShapes.get(drawnShapes.size()-1);
+            String name = shape.getName();
+            String color = shape.getColor();
+            double x1 = shape.getPoints()[0].getX();
+            double y1 = shape.getPoints()[0].getY();
+            double x2 = shape.getPoints()[1].getX();
+            double y2 = shape.getPoints()[1].getY();
+            double x3 = shape.getPoints()[2].getX();
+            double y3 = shape.getPoints()[2].getY();
+            addResponse(name, color, x1, y1, x2, y2, x3, y3);
         } else {
             System.out.println("Nothing to redo");
         }
     }
 
-    public JSONArray loadDrawnShapes(String path) {
+    public void loadDrawnShapes(String path, String fileType) {
         try {
-            drawnShapes = mapper.readValue(new File(path), ShapesList.class);
-            System.out.println("File loaded successfully");
-            undoneShapes.clear();
+            if(fileType.equals("json")) {
+                drawnShapes = mapper.readValue(new File(path), ShapesList.class);
+                System.out.println("File loaded successfully");
+                undoneShapes.clear();
+            }
+            else if(fileType.equals("xml")){
+                drawnShapes = xmlMapper.readValue(new File(path), ShapesList.class);
+                System.out.println("File loaded successfully");
+                undoneShapes.clear();
+            }
+            else {
+                System.out.println("Unsupported type");
+            }
         } catch (Exception exception) {
-            System.out.println("Failed to load file");
+            System.out.println(exception);
         }
-        return new JSONArray(drawnShapes);
+        for(int i = 0; i < drawnShapes.size(); i++){
+            String name = drawnShapes.get(i).getName();
+            String color = drawnShapes.get(i).getColor();
+            double x1 = drawnShapes.get(i).getPoints()[0].getX();
+            double y1 = drawnShapes.get(i).getPoints()[0].getY();
+            double x2 = drawnShapes.get(i).getPoints()[1].getX();
+            double y2 = drawnShapes.get(i).getPoints()[1].getY();
+            double x3 = drawnShapes.get(i).getPoints()[2].getX();
+            double y3 = drawnShapes.get(i).getPoints()[2].getY();
+            addResponse(name, color, x1, y1, x2, y2, x3, y3);
+        }
     }
 
-    public boolean saveDrawnShapes(String path) {
+    public boolean saveDrawnShapes(String path, String fileType) {
         try {
-            mapper.writeValue(new File(path), drawnShapes);
-            System.out.println("File saved successfully");
+            if (fileType.equals("json")) {
+                mapper.writeValue(new File(path), drawnShapes);
+                System.out.println("File saved successfully");
+            } else if (fileType.equals("xml")) {
+                xmlMapper.writeValue(new File(path), drawnShapes);
+                System.out.println("File saved successfully");
+            } else {
+                System.out.println("Unsupported type");
+            }
+            return true;
         } catch (IOException exception) {
             System.out.println("Failed to save file");
             return false;
         }
-        return true;
     }
 
 

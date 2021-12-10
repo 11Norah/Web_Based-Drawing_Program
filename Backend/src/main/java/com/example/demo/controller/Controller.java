@@ -6,6 +6,7 @@ import com.example.demo.factory.ObjectFactoryService;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.services.ShapeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,6 +87,31 @@ public class Controller {
     @GetMapping("/clear")
     public void clear() {
         serve.clear();
+    }
+
+    @GetMapping("/undo")
+    public List<ResponseObject> undo() {
+        return serve.undo();
+    }
+
+    @GetMapping("/redo")
+    public List<ResponseObject> redo() {
+        return serve.redo();
+    }
+
+    @GetMapping("/load")
+    public List<ResponseObject> load(@RequestParam String filePath, @RequestParam String fileType) {
+        return serve.load(filePath, fileType);
+    }
+
+    @GetMapping("/save")
+    public HttpStatus save(@RequestParam String filePath, @RequestParam String fileType) {
+        if(serve.save(filePath, fileType)) {
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.NOT_ACCEPTABLE;
+        }
     }
 
 }

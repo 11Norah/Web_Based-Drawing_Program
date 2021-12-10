@@ -1,10 +1,9 @@
 package com.example.demo.Model;
 import com.example.demo.shapes.*;
-import org.json.JSONArray;
 
 public interface DrawnShapesI {
-    JSONArray loadDrawnShapes(String path);
-    boolean saveDrawnShapes(String path);
+    void loadDrawnShapes(String path, String fileType);
+    boolean saveDrawnShapes(String path, String fileType);
     void undoShapes();
     void addShape(Shape shape);
     void redoShape();

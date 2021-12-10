@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.Model.DrawnShapes;
+import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.Point;
 import com.example.demo.shapes.Shape;
 import com.example.demo.shapes.ShapeI;
@@ -8,6 +9,8 @@ import com.example.demo.Model.DrawnShapesI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class ShapeService {
@@ -23,8 +26,23 @@ public class ShapeService {
         return this.drawnShapes;
     }
 
-    public void save(String path) {
-        drawnShapes.saveDrawnShapes(path);
+    public boolean save(String path, String fileType) {
+        return drawnShapes.saveDrawnShapes(path, fileType);
+    }
+
+    public List<ResponseObject> load(String path, String fileType) {
+        drawnShapes.loadDrawnShapes(path, fileType);
+        return drawnShapes.getResponses();
+    }
+
+    public List<ResponseObject> undo() {
+        drawnShapes.undoShapes();
+        return drawnShapes.getResponses();
+    }
+
+    public List<ResponseObject> redo() {
+        drawnShapes.redoShape();
+        return drawnShapes.getResponses();
     }
 
     public int checkCoordinate(Point click) {
