@@ -69,25 +69,40 @@ square():void{
        shape_triangle.triangle();
      }
  
-  move(){
- 
-    let selectx=0;
-    let selecty=0;
-    let newx=0;
-    let newy=0;
-    onmousedown=(event:MouseEvent)=>{
-      selectx=event.offsetX;
-      selecty=event.offsetY;
-      console.log(selectx,selecty)
-      onmousedown=(event:MouseEvent)=>{
-      newx=event.offsetX;
-      newy=event.offsetY;
-      console.log(newx,newy)
-      this.res=this.ShapeService.move_send(selectx,selecty,newx,newy)
-      this.load(this.res)
-      
-      }}
-  }
+     private  data:any;
+     move():void{
+       var m = confirm("Choose shape then the new point");
+       if(m){ 
+          let selectx=0;
+         let selecty=0;
+         let newx=0;
+         let newy=0;
+         let a=0;
+         let b=0;
+         onmousedown=(event:MouseEvent)=>{
+           selectx=event.offsetX;
+           selecty=event.offsetY;
+           console.log(selectx,selecty)
+           let validshape:string =this.ShapeService.select(selectx,selecty);
+           console.log(validshape);
+           if(validshape!=null){
+           onmousedown=(event:MouseEvent)=>{
+           newx=event.offsetX;
+           newy=event.offsetY;
+           console.log(newx,newy)
+          this.data=this.ShapeService.move_send(selectx,selecty,newx,newy)
+             console.log('data is now set', this.data);
+             console.log(this.data)
+       onmousedown=(event:MouseEvent)=>{
+        a=event.offsetX;
+        b=event.offsetY;
+       
+           this.load(this.data);
+           }}}}
+          
+     
+        }
+       }
   copy(){
     let selectx=0;
     let selecty=0;
@@ -127,6 +142,7 @@ square():void{
     let findx1,findx2,findx3;
     let findy1,findy2,findy3;
     let findcolor,findtype;
+    this.context.clearRect(0,0,1000,500)
     for( i=0;i<shapes.length;i++){
       findx1=shapes[i].x1,findx2=shapes[i].x2,findx3=shapes[i].x3,findcolor=shapes[i].color,findtype=shapes[i].name
       findy1=shapes[i].y1,findy2=shapes[i].y2,findy3=shapes[i].y3
@@ -193,34 +209,5 @@ square():void{
  
 
 
-/*window.addEventListener("load", ()=>{
-   let canvas =<HTMLCanvasElement> document.getElementById('canvas');
-   
-   let context =canvas.getContext('2d');
-   let painting =false;
-   
-   function pressEventHandler(){
-     painting=true;
-   }
-   function releaseEventHandler(){
-     painting=false;
-   }
-   function dragEventHandler(e :any){
-      if(!painting) return;
-      if(context){
-      context.lineWidth= 5;
-      context.lineCap='round';
-      context.lineTo(e.clientX ,e.clientY);
-      context.stroke();
-      
-      }
-   }
-   canvas.addEventListener("mousedown", pressEventHandler);
-    canvas.addEventListener("mousemove", dragEventHandler);
-    canvas.addEventListener("mouseup", releaseEventHandler);
-    
-    
-    
-});*/
 
 
