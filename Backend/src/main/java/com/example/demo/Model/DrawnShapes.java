@@ -134,13 +134,7 @@ public class DrawnShapes implements DrawnShapesI {
         responses.remove(index);
     }
     public void resize(int index,Point p1,Point p2) {
-        ResponseObject tempResponse;
-        Shape newShape;
         drawnShapes.get(index).resize(p1,p2);
-        newShape = drawnShapes.get(index);
-        tempResponse = new ResponseObject(newShape.getName(),newShape.getColor(),newShape.getPoints()[0],newShape.getPoints()[1],newShape.getPoints()[2] );
-        responses.remove(index);
-        responses.add(index,tempResponse);
     }
 
 }
