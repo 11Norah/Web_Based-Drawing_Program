@@ -1,13 +1,128 @@
-p {
-    font-family: Lato;
-  }
-  :host{
-    display: block;
-    height: 100vh;
-  }
- #canvas{
-   stroke: blue;
- } 
- .button{
-   padding-bottom: 10cm;
- }
+.shapes {
+  position: relative;
+  width: 450px;
+  bottom: 520px;
+  left: 1020px;
+  height:1200px;
+  background-color:white;
+}
+.shapes td, .shapes th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.rect:hover {
+  background-color:blue;
+opacity: 2;
+
+}
+.rect{
+
+font-size: xx-large;
+color: black;
+background-color: white;
+text-align: center;
+/*cursor: context-menu;*/
+}
+.edit:hover{
+  background-color:blue;
+  color:black;
+  opacity: 2;
+  cursor: copy;
+}
+.resize:hover{
+    background-color:blue ;
+    cursor: col-resize;
+
+}
+.move:hover{
+    background-color: blue;
+  cursor:move ;
+}
+.copy:hover{
+    background-color: blue;
+    cursor: copy;
+}
+.save:hover{
+    cursor:progress ;
+    background-color: blue;
+
+}
+.clear:hover{
+    cursor:no-drop ;
+    background-color: blue;
+}
+.clear {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #0446aa;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  background-color: #0d1f88;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.copy {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #0446aa;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  background-color: #0d1f88;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.move {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #0446aa;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  background-color: #0d1f88;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.resize {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #0446aa;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  background-color: #0d1f88;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.save {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #0446aa;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  background-color: #0d1f88;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

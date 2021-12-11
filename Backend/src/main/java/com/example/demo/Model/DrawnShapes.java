@@ -5,19 +5,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.factory.ObjectFactoryI;
+import com.example.demo.factory.ObjectFactoryService;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DrawnShapes implements DrawnShapesI {
     private ShapesList drawnShapes;
-    private ShapesList undoneShapes;
     private ObjectMapper mapper;
-    private XmlMapper xmlMapper = new XmlMapper();
-    private List<ResponseObject> responses;
+    private XmlMapper xmlMapper;
+    private ResponsesList responses;
+    private ResponsesList undoneResponses;
 
 
     public List<ResponseObject> getResponses(){
@@ -39,28 +43,28 @@ public class DrawnShapes implements DrawnShapesI {
 
     public DrawnShapes() {
         this.drawnShapes = new ShapesList();
-        this.undoneShapes = new ShapesList();
-        this.responses = new ArrayList<>();
+        this.undoneResponses = new ResponsesList();
+        this.responses = new ResponsesList();
         mapper = new ObjectMapper();
+        xmlMapper = new XmlMapper();
     }
 
-    public void addResponse(String name, String color, double x1, double y1, double x2, double y2, double x3, double y3) {
-        ResponseObject response = new ResponseObject(name, color, x1,y1,x2,y2,x3,y3);
+    public void addResponse(ResponseObject response) {
         this.responses.add(response);
     }
 
 
     public void undoShapes() {
-        if (drawnShapes.size() != 0) {
-            undoneShapes.add(drawnShapes.remove(drawnShapes.size() - 1));
-            responses.remove(responses.size()-1);
+        if (responses.size() != 0) {
+            undoneResponses.add(responses.remove(responses.size() - 1));
+            drawnShapes.remove(drawnShapes.size()-1);
         } else {
             System.out.println("Nothing to undo");
         }
     }
     public void clear(){
         drawnShapes.clear();
-        undoneShapes.clear();
+        undoneResponses.clear();
         responses.clear();
     }
 
@@ -69,34 +73,31 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
     public void redoShape() {
-        if (undoneShapes.size() != 0) {
-            drawnShapes.add(undoneShapes.remove(drawnShapes.size() - 1));
-            Shape shape = drawnShapes.get(drawnShapes.size()-1);
-            String name = shape.getName();
-            String color = shape.getColor();
-            double x1 = shape.getPoints()[0].getX();
-            double y1 = shape.getPoints()[0].getY();
-            double x2 = shape.getPoints()[1].getX();
-            double y2 = shape.getPoints()[1].getY();
-            double x3 = shape.getPoints()[2].getX();
-            double y3 = shape.getPoints()[2].getY();
-            addResponse(name, color, x1, y1, x2, y2, x3, y3);
+        if (undoneResponses.size() != 0) {
+            responses.add(undoneResponses.remove(undoneResponses.size() - 1));
+            ObjectFactoryI factory = new ObjectFactoryService();
+            ResponseObject res = responses.get(responses.size()-1);
+            Point p1 = new Point(res.getX1(), res.getY1());
+            Point p2 = new Point(res.getX2(), res.getY2());
+            Point p3 = new Point(res.getX3(), res.getY3());
+            Shape shape = factory.getObject(res.getName(), res.getColor(), p1, p2, p3);
+            addShape(shape);
         } else {
             System.out.println("Nothing to redo");
         }
     }
 
-    public void loadDrawnShapes(String path, String fileType) {
+    public ResponsesList loadDrawnShapes(String path, String fileType) {
         try {
             if(fileType.equals("json")) {
-                drawnShapes = mapper.readValue(new File(path), ShapesList.class);
+                responses = mapper.readValue(new File(path), ResponsesList.class);
                 System.out.println("File loaded successfully");
-                undoneShapes.clear();
+                undoneResponses.clear();
             }
             else if(fileType.equals("xml")){
-                drawnShapes = xmlMapper.readValue(new File(path), ShapesList.class);
+                responses = xmlMapper.readValue(new File(path), ResponsesList.class);
                 System.out.println("File loaded successfully");
-                undoneShapes.clear();
+                undoneResponses.clear();
             }
             else {
                 System.out.println("Unsupported type");
@@ -104,26 +105,26 @@ public class DrawnShapes implements DrawnShapesI {
         } catch (Exception exception) {
             System.out.println(exception);
         }
-        for(int i = 0; i < drawnShapes.size(); i++){
-            String name = drawnShapes.get(i).getName();
-            String color = drawnShapes.get(i).getColor();
-            double x1 = drawnShapes.get(i).getPoints()[0].getX();
-            double y1 = drawnShapes.get(i).getPoints()[0].getY();
-            double x2 = drawnShapes.get(i).getPoints()[1].getX();
-            double y2 = drawnShapes.get(i).getPoints()[1].getY();
-            double x3 = drawnShapes.get(i).getPoints()[2].getX();
-            double y3 = drawnShapes.get(i).getPoints()[2].getY();
-            addResponse(name, color, x1, y1, x2, y2, x3, y3);
+        ObjectFactoryI factory = new ObjectFactoryService();
+        drawnShapes.clear();
+        for(int i = 0; i < responses.size(); i++){
+            ResponseObject res = responses.get(i);
+            Point p1 = new Point(res.getX1(), res.getY1());
+            Point p2 = new Point(res.getX2(), res.getY2());
+            Point p3 = new Point(res.getX3(), res.getY3());
+            Shape shape = factory.getObject(responses.get(i).getName(), responses.get(i).getColor(), p1, p2, p3);
+            addShape(shape);
         }
+        return responses;
     }
 
     public boolean saveDrawnShapes(String path, String fileType) {
         try {
             if (fileType.equals("json")) {
-                mapper.writeValue(new File(path), drawnShapes);
+                mapper.writeValue(new File(path), responses);
                 System.out.println("File saved successfully");
             } else if (fileType.equals("xml")) {
-                xmlMapper.writeValue(new File(path), drawnShapes);
+                xmlMapper.writeValue(new File(path), responses);
                 System.out.println("File saved successfully");
             } else {
                 System.out.println("Unsupported type");

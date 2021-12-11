@@ -1,18 +1,21 @@
+
 <head>
-  <title>PAINT</title>
+    <title>PAINT</title>
 </head>
+
+
 <body >
-    
+
   <canvas  #canvas width="1000" height="500" style="border:2px solid;"></canvas>
 
-  
-    
-    <img style="position:absolute;top:10%;left:52%;" style="display:none;">
+
+
+    <img style="position:absolute;top:10%;left:42%;" style="display:none;">
     <div class="shapes">
     <table style="width: 100px;">
-      <p>Choose color  </p>
+      <p  >Choose color  </p>
     <tr>
-    
+
       </tr>
       <tr>
       <td style="background:green; width: 20px; cursor: context-menu;" title="green"  (click)="color('green')"></td>
@@ -22,7 +25,10 @@
       <td style="background:orange;cursor: context-menu;" title="orange"  (click)="color('orange')"></td>
       <td style="background:black;cursor: context-menu;" title="black"  (click)="color('black')"></td>
       </tr>
-      <tr><div>Select Shape To Draw</div></tr>
+     <p>Select Shape to draw </p>
+      <tr>
+
+      </tr>
       <tr>
       <td class="rect" title="rectangle" (click)="rectangle()">&#9645;</td>
       <td class="rect" title="square" (click)="square()">&#9633;</td>
@@ -31,12 +37,17 @@
       <td class="rect" title="triangle" (click)="triangle()">&#9651;</td>
       <td class="rect" title="line" (click)="line()">─</td>
     </tr>
-    <tr>Editor</tr>
+    <tr>
+
+    </tr>
+    <tr> <p>Editor</p>
+    </tr>
     <td class="move" (click)="move()">move</td>
     <td class="copy"  (click)="copy()">copy</td>
     <td class="resize"  (click)="resize()">resize</td>
-    <td class="save"  (click)="move()">save</td>
-    <td class="clear"  (click)="clearCanvas()">clear</td>
+    <td class="save"  (click)="save()">save</td>
+    <td class="save"  (click)="clearCanvas()">clear</td>
+    <td class="save"  (click)="Load()">Load</td>
     </table>
   </div>
   </body>

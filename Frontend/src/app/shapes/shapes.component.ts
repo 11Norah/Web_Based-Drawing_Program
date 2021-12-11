@@ -10,21 +10,20 @@ import { ConfigurationService } from '../configuration.service';
   styleUrls: ['./shapes.component.css']
 })
 export class SHAPESComponent implements OnInit {
-  
- 
-  constructor() {    
-    
-  }
+
+
+  constructor() {}
+
   ngOnInit(): void {
-    
+
   }}
   export class SHAPES{
-    colourchanged: boolean= false;
+    colourchanged: boolean = false;
     startX: number;
     startY: number;
     lastX: number;
     lastY: number;
-   
+
     constructor(private context :CanvasRenderingContext2D, private SEND: ConfigurationService ){}
     //newcolour:string="black";
    hexcolours() :string {
@@ -53,26 +52,27 @@ export class SHAPESComponent implements OnInit {
       case "#ffffff":
           x = "white";
           break;
-  }return(x);
+  }
+  return(x);
    }
-  
+
     rectangle(){
-    
+
       let x=0;
       let y=0;
       let lasty=0;
       let lastx=0;
-      
+
       onmousedown = (event: MouseEvent) => {
          x=event.offsetX;
          y=event.offsetY;
          onmousedown = (event: MouseEvent) => {
           lastx=event.offsetX;
           lasty=event.offsetY;
-          console.log(x,y); 
+          console.log(x,y);
           this.context.beginPath();
           console.log(this.colourchanged);
-          
+
             let color =this.hexcolours();
             this.context.strokeRect(x,y,lastx-x,lasty-y);
             this.SEND.send("rectangle",color,x,y,lastx,lasty);
@@ -80,10 +80,10 @@ export class SHAPESComponent implements OnInit {
             this.context.beginPath();
        }
       }
-      
-    } 
+
+    }
     ellipse(){
-     
+
       let x=0;
       let y=0;
       let lasty=0;
@@ -92,12 +92,12 @@ export class SHAPESComponent implements OnInit {
       let radiousy=0;
       let x2=0;
       let y2=0;
-      onmousedown = (event: MouseEvent) => { 
+      onmousedown = (event: MouseEvent) => {
          x=event.offsetX;
          y=event.offsetY;
-         onmousedown = (event: MouseEvent) => { 
+         onmousedown = (event: MouseEvent) => {
           lastx=event.offsetX;
-          lasty=event.offsetY; 
+          lasty=event.offsetY;
           onmousedown=(event:MouseEvent)=>{
             x2=event.offsetX;
             y2=event.offsetY;
@@ -114,14 +114,14 @@ export class SHAPESComponent implements OnInit {
               this.SEND.send_et('ellipse',color,x,y,lastx,lasty,x2,y2);
               this.ellipse();
               this.context.closePath();
-              
+
 
     }
   }
   }}
-    
+
     circle(){
-     
+
       let x=0;
       let y=0;
       let lasty=0;
@@ -129,13 +129,13 @@ export class SHAPESComponent implements OnInit {
       let radious=0;
       let m1=0;
       let m2=0;
-      onmousedown = (event: MouseEvent) => { 
+      onmousedown = (event: MouseEvent) => {
          x=event.offsetX;
          y=event.offsetY;
-         onmousedown = (event: MouseEvent) => { 
+         onmousedown = (event: MouseEvent) => {
           lastx=event.offsetX;
-          lasty=event.offsetY; 
-          
+          lasty=event.offsetY;
+
           console.log(x,y);
           radious=Math.sqrt(Math.pow((lastx-x),2)+Math.pow((lasty-y),2));
           console.log(radious);
@@ -146,22 +146,22 @@ export class SHAPESComponent implements OnInit {
               this.SEND.send('circle',color,x,y,lastx,lasty);
               this.circle();
               this.context.beginPath();
-     
-    } 
+
+    }
     }}
    square(){
-     
-    
+
+
     let x=0;
     let y=0;
     let lasty=0;
     let lastx=0;
-    onmousedown = (event: MouseEvent) => { 
+    onmousedown = (event: MouseEvent) => {
        x=event.offsetX;
        y=event.offsetY;
-       onmousedown = (event: MouseEvent) => { 
+       onmousedown = (event: MouseEvent) => {
         lastx=event.offsetX;
-        lasty=event.offsetY; 
+        lasty=event.offsetY;
         console.log(x,y);
         this.context.beginPath();
         let color =this.hexcolours();
@@ -171,8 +171,8 @@ export class SHAPESComponent implements OnInit {
            this.square();
            this.context.beginPath();
      }
-    } 
-   
+    }
+
    }
     drawLine() {
     let prevX=0
@@ -185,7 +185,7 @@ export class SHAPESComponent implements OnInit {
     onmousedown=(ev :MouseEvent)=>{ currX=ev.offsetX; currY=ev.offsetY;
       console.log(prevX,currX,currY);
       this.context.beginPath();
-      this.context.moveTo(prevX, prevY);   
+      this.context.moveTo(prevX, prevY);
     this.context.lineTo(currX, currY);
     let color =this.hexcolours();
     this.context.lineWidth = 2;
@@ -193,13 +193,13 @@ export class SHAPESComponent implements OnInit {
     this.context.closePath();
     this.SEND.send('line',color,prevX,prevY,currX,currY);
     this.drawLine();
-    
+
     this.context.beginPath();
    }}
-  
+
 }
 triangle(){
-  
+
   let x=0;
   let y=0;
   let lasty=0;
@@ -208,17 +208,17 @@ triangle(){
   let radiousy=0;
   let x2=0;
   let y2=0;
-  onmousedown = (event: MouseEvent) => { 
+  onmousedown = (event: MouseEvent) => {
      x=event.offsetX;
      y=event.offsetY;
-     onmousedown = (event: MouseEvent) => { 
+     onmousedown = (event: MouseEvent) => {
       lastx=event.offsetX;
-      lasty=event.offsetY; 
+      lasty=event.offsetY;
       onmousedown=(event:MouseEvent)=>{
         x2=event.offsetX;
         y2=event.offsetY;
         let color =this.hexcolours();
-      
+
       this.context.beginPath();
           this.context.moveTo(x,y);
           this.context.lineTo(lastx,lasty);
@@ -229,7 +229,7 @@ triangle(){
           this.SEND.send_et('triangle',color,x,y,lastx,lasty,x2,y2);
           this.triangle();
           this.context.closePath();
-         
+
 
 }
 }

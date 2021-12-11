@@ -1,8 +1,11 @@
 package com.example.demo.Model;
+import com.example.demo.response.ResponseObject;
 import com.example.demo.shapes.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public interface DrawnShapesI {
-    void loadDrawnShapes(String path, String fileType);
+    ResponsesList loadDrawnShapes(String path, String fileType);
     boolean saveDrawnShapes(String path, String fileType);
     void undoShapes();
     void addShape(Shape shape);

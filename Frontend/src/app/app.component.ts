@@ -10,20 +10,21 @@ import { ConfigurationService } from './configuration.service';
 })
 export class AppComponent  {
   title = 'paint';
-  
+
   @ViewChild('canvas',{static:true})
 
   canvas: ElementRef<HTMLCanvasElement> ;
-  context :CanvasRenderingContext2D ;
-  res:any
+  context: CanvasRenderingContext2D ;
+  res: any;
+  private hhtp: HttpClient;
+
   constructor( private ShapeService :ConfigurationService ){}
-  private hhtp:HttpClient
-   ngOnInit():void {
+
+  ngOnInit():void {
     this.context=this.canvas.nativeElement.getContext('2d');
-    
-}
+  }
 rectangle():void{
-    
+
   const shape_rect=new SHAPES(this.context,this.ShapeService);
   shape_rect.rectangle();
 };
@@ -33,13 +34,13 @@ circle():void{
   shape_circle.circle();
 }
 square():void{
-  
+
   const shape_square=new SHAPES(this.context,this.ShapeService);
-  
+
   shape_square.square();
- 
+
 };
-  
+
   clearCanvas() {
     var m = confirm("Want to clear");
     var x,y;
@@ -54,25 +55,25 @@ square():void{
 
       line(){
         const new_line=new SHAPES(this.context,this.ShapeService);
-       
+
         new_line.drawLine();
-       
-      }    
+
+      }
       ellipse():void{
        const shape_ellipse= new SHAPES(this.context,this.ShapeService);
-       
+
        shape_ellipse.ellipse();
      }
      triangle():void{
        const shape_triangle=new SHAPES(this.context,this.ShapeService);
-       
+
        shape_triangle.triangle();
      }
- 
+
      private  data:any;
      move():void{
        var m = confirm("Choose shape then the new point");
-       if(m){ 
+       if(m){
           let selectx=0;
          let selecty=0;
          let newx=0;
@@ -96,11 +97,11 @@ square():void{
        onmousedown=(event:MouseEvent)=>{
         a=event.offsetX;
         b=event.offsetY;
-       
+
            this.load(this.data);
            }}}}
-          
-     
+
+
         }
        }
   copy(){
@@ -136,6 +137,13 @@ square():void{
     }
   }
 
+  save(){
+    this.ShapeService.save_send("", "");
+  }
+
+  Load(){
+    this.ShapeService.load_send("", "");
+  }
 
   load(shapes:{name:string,color:string,x1:number,y1:number,x2:number,y2:number,x3:number,y3:number}[]){
     let i=0;
@@ -188,7 +196,7 @@ square():void{
       else if(findtype='line'){
         this.context.beginPath();
         this.context.strokeStyle=findcolor;
-        this.context.moveTo(findx1, findy1);   
+        this.context.moveTo(findx1, findy1);
       this.context.lineTo(findx2, findy2);
       this.context.lineWidth = 2;
       this.context.stroke();
@@ -196,18 +204,11 @@ square():void{
       }
     }
   }
-  color(obj) { 
+  color(obj) {
     var x,y;
     this.context.strokeStyle=obj;
     onmousedown=(event:MouseEvent)=>{
       x=event.offsetX;
       y=event.offsetY;
     }
-   
-
 }}
- 
-
-
-
-

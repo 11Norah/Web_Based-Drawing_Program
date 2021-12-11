@@ -18,16 +18,6 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-
-		DrawnShapes drawnshapes = new DrawnShapes();
-
-		Rectangle rectangle = new Rectangle(new Point(10, 10), new Point(30, 40), "red");
-		Circle circle = new Circle(new Point(30, 30), new Point(50, 50), "blue");
-
-		drawnshapes.addShape(rectangle);
-		drawnshapes.addShape(circle);
-
-		drawnshapes.saveDrawnShapes("E://Paint/Backend/TEST", "json");
 	}
 
 	@Bean
