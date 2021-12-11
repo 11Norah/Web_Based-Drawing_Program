@@ -144,7 +144,20 @@ public class DrawnShapes implements DrawnShapesI {
         tempShape = drawnShapes.get(index);
         drawnShapes.remove(index);
         drawnShapes.add(tempShape);
-        tempResponse = new ResponseObject(tempShape.getName(),tempShape.getColor(),tempShape.getPoints()[0].getX(),tempShape.getPoints()[0].getY(),tempShape.getPoints()[1].getX(),tempShape.getPoints()[1].getY(),tempShape.getPoints()[2].getX(),tempShape.getPoints()[2].getY() );
+        double x1 = 0, x2 = 0, x3 = 0, y1 = 0, y2 = 0, y3 = 0;
+        if(tempShape.getPoints()[0] != null) {
+            x1 = tempShape.getPoints()[0].getX();
+            y1 = tempShape.getPoints()[0].getY();
+        }
+        if(tempShape.getPoints()[1] != null) {
+            x2 = tempShape.getPoints()[1].getX();
+            y2 = tempShape.getPoints()[1].getY();
+        }
+        if(tempShape.getPoints()[2] != null) {
+            x3 = tempShape.getPoints()[2].getX();
+            y3 = tempShape.getPoints()[2].getY();
+        }
+        tempResponse = new ResponseObject(tempShape.getName(),tempShape.getColor(), x1, y1, x2, y2, x3, y3);
         responses.remove(index);
         responses.add(tempResponse);
     }

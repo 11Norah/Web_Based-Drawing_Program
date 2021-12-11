@@ -30,18 +30,20 @@ public class Controller {
         return HttpStatus.OK;
     }
 
-    @GetMapping("/select")
-    public String select(@RequestParam double x, @RequestParam double y) {
+    @GetMapping("/select/{x}/{y}")
+    public String select(@PathVariable("x") double x, @PathVariable("y") double y) {
         Point click = new Point(x, y);
         this.index = serve.checkCoordinate(click);
         if (this.index != -1) {
             return serve.getdrawns().get(this.index).getName();
         }
-        return null;
+        System.out.print("NO");
+        return "null";
     }
 
     @GetMapping("/move")
     public List<ResponseObject> move(@RequestParam double x, @RequestParam double y) {
+        System.out.println("MOVE");
         Point moveTo = new Point(x, y);
         serve.move(this.index, moveTo);
         return serve.getDrawnShapes().getResponses();

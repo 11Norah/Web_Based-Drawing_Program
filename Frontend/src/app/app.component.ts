@@ -84,14 +84,14 @@ square():void{
            selectx=event.offsetX;
            selecty=event.offsetY;
            console.log(selectx,selecty)
-           let validshape:string =this.ShapeService.select(selectx,selecty);
+           let validshape:string = this.ShapeService.select(selectx,selecty);
            console.log(validshape);
-           if(validshape!=null){
+           if(validshape!=="null"){
            onmousedown=(event:MouseEvent)=>{
            newx=event.offsetX;
            newy=event.offsetY;
            console.log(newx,newy)
-          this.data=this.ShapeService.move_send(selectx,selecty,newx,newy)
+          this.data=this.ShapeService.move_send(newx, newy)
              console.log('data is now set', this.data);
              console.log(this.data)
        onmousedown=(event:MouseEvent)=>{
@@ -117,7 +117,7 @@ square():void{
       newx=event.offsetX;
       newy=event.offsetY;
       console.log(newx,newy)
-    //  this.ShapeService.copy_send({x:selectx,y:selecty})
+      this.ShapeService.copy_send(selectx,  selecty)
     }}
   }
   resize(){
