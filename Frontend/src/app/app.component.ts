@@ -108,6 +108,23 @@ square():void{
 
         }
        }
+
+  undo() {
+    this.ShapeService.undo_send()
+      .subscribe(undoneShapes => {
+        console.log(undoneShapes);
+        this.load(undoneShapes);
+      })
+  }
+
+  redo() {
+    this.ShapeService.redo_send()
+      .subscribe(redoneShapes => {
+        console.log(redoneShapes);
+        this.load(redoneShapes);
+      })
+  }
+
   copy(){
     let selectx=0;
     let selecty=0;
