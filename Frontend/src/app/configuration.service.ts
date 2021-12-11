@@ -90,7 +90,7 @@ export class ConfigurationService {
   }
   //to resize shape
   resize_send(px1: number, py1: number): any {
-    console.log('ana fe copy');
+    console.log('ana fe resize');
     console.log(this.b);
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const params = new HttpParams()
@@ -100,8 +100,8 @@ export class ConfigurationService {
   }
   save_send(filePath: string, fileType: string) {
     let fileInfo = {
-      filePath: "E://Paint/Backend/TEST",
-      fileType: "xml",
+      filePath,
+      fileType
     }
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http.post('http://localhost:8080/save', JSON.stringify(fileInfo), {headers})
@@ -113,8 +113,8 @@ export class ConfigurationService {
   load_send(filePath: string, fileType: string): any {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const params = new HttpParams()
-      .append('filePath', 'E://Paint/Backend/TEST')
-      .append('fileType', 'xml');
+      .append('filePath', filePath)
+      .append('fileType', fileType);
     return this.http.get<ResponseObject[]>('http://localhost:8080/load', {headers, params});
   }
 

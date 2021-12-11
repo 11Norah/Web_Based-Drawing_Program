@@ -159,13 +159,33 @@ square():void{
     }
   }
 
-  save(){
-    this.ShapeService.save_send("", "");
+  Load(x:any){
+    console.log(x);
+    let n=x.length;
+    let type;
+    console.log(n);
+     if((x[n-1]=='l')&&(x[n-2]=='m')&&(x[n-3]=='x')) {
+       type='xml';
+       this.ShapeService.load_send(x,type)
+          .subscribe(loadedShapes => this.load(loadedShapes));
+     }
+    else if((x[n-1]=='n')&&(x[n-2]=='o')&&(x[n-3]=='s')&&(x[n-4]=='j')) {
+      type='json';
+      this.ShapeService.load_send(x,type)
+        .subscribe(loadedShapes => this.load(loadedShapes));
+    }
+    else {
+      alert("file type is not JSON or XML")
+    }
+     console.log(type);
   }
 
-  Load(){
-    this.ShapeService.load_send("", "")
-      .subscribe(loadedShapes => this.load(loadedShapes));
+  save(path:any, type:any){
+    console.log(typeof(type));
+    type=type.toString();
+    console.log(path ,type);
+    console.log(typeof(type));
+    this.ShapeService.save_send(path+"."+type, type);
   }
 
   load(shapes:{name:string,color:string,x1:number,y1:number,x2:number,y2:number,x3:number,y3:number}[]){

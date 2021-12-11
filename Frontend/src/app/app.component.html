@@ -5,17 +5,18 @@
 
 
 <body >
-    
+
+
   <canvas  #canvas width="1000" height="500" style="border:2px solid;"></canvas>
 
-  
-    
+
+
     <img style="position:absolute;top:10%;left:42%;" style="display:none;">
     <div class="shapes">
     <table style="width: 100px;">
       <h1 >Choose color  </h1>
     <tr>
-    
+
       </tr>
       <tr>
       <td style="background:green; width: 20px; cursor: context-menu;" title="green"  (click)="color('green')"></td>
@@ -25,13 +26,13 @@
       <td style="background:orange;cursor: context-menu;" title="orange"  (click)="color('orange')"></td>
       <td style="background:black;cursor: context-menu;" title="black"  (click)="color('black')"></td>
       </tr>
-     
+
         <div><h1>Select Shape</h1></div>
-    
+
       <tr>
-       
+
       </tr>
-     
+
       <tr>
       <td class="rect" title="rectangle" (click)="rectangle()">&#9645;</td>
       <td class="rect" title="square" (click)="square()">&#9633;</td>
@@ -47,7 +48,7 @@
     </tr>
     <td class="move" (click)="move()">move</td>
     <td class="copy"  (click)="copy()">copy</td>
-    <td class="resize"  (click)="Resize()">resize</td>
+    <td class="resize"  (click)="resize()">resize</td>
     <td class="save"  (click)="clearCanvas()">clear</td>
     <td class="save"  onclick="Undo()">Undo</td>
     <td class="save"  onclick="Redo()">Redo</td>
@@ -56,25 +57,23 @@
 
     </tr>
   </div>
-   
+
     <div style="position:absolute;top:70%;left:5%;" >
       <h1>Choose file to load</h1>
-     <input type="text" #URL/>
-     <button class ="save" (click)=Load(URL.value)>Load</button>
+     <input type="text" #ff/>
+     <button class ="save" (click)=Load(ff.value)>Load</button>
     </div>
-    
-    
+
+
   <div style="position:absolute;top:70%;left:35%;">
     <h1>Enter a path to save your file</h1>
     <select  #type>
-      <option >XML</option>
-      <option >JSON </option>
+      <option >xml</option>
+      <option >json </option>
       </select>
    <input type="text" #URL/>
    <button class ="save" (click)=save(URL.value,type.value)>Save</button>
   </div>
-  
-  
+
+
   </body>
-  
- 

@@ -131,7 +131,7 @@ public class DrawnShapes implements DrawnShapesI {
             }
             return true;
         } catch (IOException exception) {
-            System.out.println("Failed to save file");
+            System.out.println(exception);
             return false;
         }
     }
