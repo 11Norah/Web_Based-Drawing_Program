@@ -191,6 +191,28 @@ square():void{
     }
   }
 
+  delete(){
+    let selectx=0;
+    let selecty=0;
+    let newx=0;
+    let newy=0;
+    onmousedown=(event:MouseEvent)=>{
+      selectx=event.offsetX;
+      selecty=event.offsetY;
+      console.log(selectx,selecty)
+      this.ShapeService.select(selectx, selecty)
+        .subscribe(res => {
+          if(res !== "null"){
+            this.ShapeService.delete_send()
+              .subscribe(newRes => {
+                console.log(newRes);
+                this.load(newRes);
+              });
+          }
+        });
+    }
+  }
+
   Load(x:any){
     console.log(x);
     let n=x.length;

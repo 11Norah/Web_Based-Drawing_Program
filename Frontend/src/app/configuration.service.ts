@@ -84,9 +84,7 @@ export class ConfigurationService {
   delete_send(): any {
     console.log('ana fe delete');
     console.log(this.b);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get('http://localhost:8080/delete', {headers})
-      .subscribe(res => console.log(res));
+    return this.http.get('http://localhost:8080/delete');
   }
   //to resize shape
   resize_send(px1: number, py1: number, px2: number, py2: number): any {

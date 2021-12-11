@@ -66,20 +66,24 @@ export class SHAPESComponent implements OnInit {
       onmousedown = (event: MouseEvent) => {
          x=event.offsetX;
          y=event.offsetY;
+         if(x<1500&&y<500){
          onmousedown = (event: MouseEvent) => {
           lastx=event.offsetX;
           lasty=event.offsetY;
+          if(lastx<this.context.canvas.width&&lasty<500){
+
           console.log(x,y);
           this.context.beginPath();
           console.log(this.colourchanged);
 
             let color =this.hexcolours();
             this.context.strokeRect(x,y,lastx-x,lasty-y);
+            console.log(this.context.canvas.width,this.context.canvas.height)
             this.SEND.send("rectangle",color,x,y,lastx,lasty);
             this.rectangle();
             this.context.beginPath();
        }
-      }
+      }}}
 
     }
     ellipse(){
@@ -95,12 +99,14 @@ export class SHAPESComponent implements OnInit {
       onmousedown = (event: MouseEvent) => {
          x=event.offsetX;
          y=event.offsetY;
+         if(x<1000&&y<500){
          onmousedown = (event: MouseEvent) => {
           lastx=event.offsetX;
           lasty=event.offsetY;
           onmousedown=(event:MouseEvent)=>{
             x2=event.offsetX;
             y2=event.offsetY;
+            if(x2<1000&&y<500){
             let color =this.hexcolours();
           console.log(x,y);
           console.log(x2,y2);
@@ -116,7 +122,7 @@ export class SHAPESComponent implements OnInit {
               this.context.closePath();
 
 
-    }
+    }}}
   }
   }}
 
@@ -132,9 +138,11 @@ export class SHAPESComponent implements OnInit {
       onmousedown = (event: MouseEvent) => {
          x=event.offsetX;
          y=event.offsetY;
+         if(x<1000&&y<500){
          onmousedown = (event: MouseEvent) => {
           lastx=event.offsetX;
           lasty=event.offsetY;
+          if(x<1000&&y<500){
 
           console.log(x,y);
           radious=Math.sqrt(Math.pow((lastx-x),2)+Math.pow((lasty-y),2));
@@ -147,7 +155,7 @@ export class SHAPESComponent implements OnInit {
               this.circle();
               this.context.beginPath();
 
-    }
+    }}}
     }}
    square(){
 
@@ -159,9 +167,11 @@ export class SHAPESComponent implements OnInit {
     onmousedown = (event: MouseEvent) => {
        x=event.offsetX;
        y=event.offsetY;
+       if(x<1000&&y<500){
        onmousedown = (event: MouseEvent) => {
         lastx=event.offsetX;
         lasty=event.offsetY;
+        if(x<1000&&y<500){
         console.log(x,y);
         this.context.beginPath();
         let color =this.hexcolours();
@@ -170,9 +180,9 @@ export class SHAPESComponent implements OnInit {
            this.SEND.send('square',color,x,y,lastx,lasty);
            this.square();
            this.context.beginPath();
-     }
+     }}
     }
-
+  }
    }
     drawLine() {
     let prevX=0
@@ -182,8 +192,10 @@ export class SHAPESComponent implements OnInit {
     console.log("ana hna");
     onmousedown=(event:MouseEvent)=>{ prevX=event.offsetX; prevY=event.offsetY;
     console.log(prevX,prevY);
+    if(prevX<1000&&prevY<500){
     onmousedown=(ev :MouseEvent)=>{ currX=ev.offsetX; currY=ev.offsetY;
       console.log(prevX,currX,currY);
+      if(currX<10000&&currY<500){
       this.context.beginPath();
       this.context.moveTo(prevX, prevY);
     this.context.lineTo(currX, currY);
@@ -195,7 +207,7 @@ export class SHAPESComponent implements OnInit {
     this.drawLine();
 
     this.context.beginPath();
-   }}
+   }}}}
 
 }
 triangle(){
@@ -211,12 +223,15 @@ triangle(){
   onmousedown = (event: MouseEvent) => {
      x=event.offsetX;
      y=event.offsetY;
+     if(x<1000&&y<5000){
      onmousedown = (event: MouseEvent) => {
       lastx=event.offsetX;
       lasty=event.offsetY;
+      if(lastx<1000&&lasty<5000)
       onmousedown=(event:MouseEvent)=>{
         x2=event.offsetX;
         y2=event.offsetY;
+        if(x2<1000&&y<500){
         let color =this.hexcolours();
 
       this.context.beginPath();
@@ -232,8 +247,6 @@ triangle(){
 
 
 }
+}}}}
 }
 }
-}
-
-  }
