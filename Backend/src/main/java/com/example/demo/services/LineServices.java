@@ -52,8 +52,8 @@ public class LineServices {
             b = 2 * m * c - 2 * m * click.getY() - 2 * click.getX();
             cDash = c * c - 2 * c * click.getY() - length * length + Math.pow(click.getY(), 2) + Math.pow(click.getX(), 2);
             double sqr00t = Math.sqrt(b * b - 4 * a * cDash);
-            x1 = (-b + sqr00t) / 2 * a;
-            x2 = (-b - sqr00t) / 2 * a;
+            x1 = (-b + sqr00t) / (2 * a);
+            x2 = (-b - sqr00t) / (2 * a);
             y1 = m * x1 + c;
             y2 = m * x2 + c;
             return changeP2(x1, x2, y1, y2, detectType(p1, p2));

@@ -4,6 +4,8 @@ import com.example.demo.Model.*;
 import com.example.demo.factory.ObjectFactoryService;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.services.ShapeService;
+import com.example.demo.services.undoServices.UndoObject;
+import com.example.demo.services.undoServices.UndoObjectBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +24,18 @@ public class Controller {
     @Autowired
     ObjectFactoryService factory;
 
+    @Autowired
+    UndoObjectBuilder undoObjectBuilder;
+
+
     private int index;
 
     @PostMapping("/add")
     public HttpStatus integration(@RequestBody ResponseObject req) {
         serve.add(req);
+        UndoObject newObject = undoObjectBuilder.afterAdd(req);
+        serve.getDrawnShapes().addToUndo(newObject);
+        serve.getDrawnShapes().clearRedoList();
         return HttpStatus.OK;
     }
 
@@ -46,6 +55,10 @@ public class Controller {
         System.out.println("MOVE");
         Point moveTo = new Point(x, y);
         serve.move(this.index, moveTo);
+        serve.getDrawnShapes().clearRedoList();
+        for(int i=0;i<serve.getDrawnShapes().getResponses().size();i++){
+            System.out.println(serve.getDrawnShapes().getResponses().get(i).name);
+        }
         return serve.getDrawnShapes().getResponses();
     }
 
@@ -53,12 +66,14 @@ public class Controller {
     public List<ResponseObject> copy(@RequestParam double x, @RequestParam double y) {
         Point copyTo = new Point(x, y);
         serve.copy(this.index, copyTo);
+        serve.getDrawnShapes().clearRedoList();
         return serve.getDrawnShapes().getResponses();
     }
 
     @GetMapping("/delete")
     public List<ResponseObject> delete() {
         serve.delete(this.index);
+        serve.getDrawnShapes().clearRedoList();
         return serve.getDrawnShapes().getResponses();
     }
 
@@ -67,12 +82,14 @@ public class Controller {
         Point p1 = new Point(x1, y1);
         Point p2 = new Point(x2, y2);
         serve.resize(this.index, p1, p2);
+        serve.getDrawnShapes().clearRedoList();
         return serve.getDrawnShapes().getResponses();
     }
 
     @GetMapping("/clear")
     public void clear() {
         serve.clear();
+        serve.getDrawnShapes().clearRedoList();
     }
 
     @GetMapping("/undo")
@@ -87,15 +104,15 @@ public class Controller {
 
     @GetMapping("/load")
     public ResponsesList load(@RequestParam String filePath, @RequestParam String fileType) {
+        serve.getDrawnShapes().clearRedoList();
         return serve.load(filePath, fileType);
     }
 
     @PostMapping("/save")
     public HttpStatus save(@RequestBody FileInfo file) {
-        if(serve.save(file.getFilePath(), file.getFileType())) {
+        if (serve.save(file.getFilePath(), file.getFileType())) {
             return HttpStatus.OK;
-        }
-        else {
+        } else {
             return HttpStatus.NOT_ACCEPTABLE;
         }
     }

@@ -6,6 +6,7 @@ import com.example.demo.Model.ShapesList;
 import com.example.demo.factory.ObjectFactoryI;
 import com.example.demo.factory.ObjectFactoryService;
 import com.example.demo.response.ResponseObject;
+import com.example.demo.services.undoServices.UndoObject;
 import com.example.demo.shapes.Point;
 import com.example.demo.shapes.Shape;
 import com.example.demo.shapes.ShapeI;
@@ -25,6 +26,7 @@ public class ShapeService {
     @Autowired
     DrawnShapes drawnShapes;
 
+
     public void add(ResponseObject res) {
         drawnShapes.addResponse(res);
         ObjectFactoryI factory = new ObjectFactoryService();
@@ -34,10 +36,12 @@ public class ShapeService {
         Shape shape = factory.getObject(res.getName(), res.getColor(), p1, p2, p3);
         drawnShapes.addShape(shape);
     }
-    public DrawnShapes getDrawnShapes(){
+
+    public DrawnShapes getDrawnShapes() {
         return this.drawnShapes;
     }
-    public ShapesList getdrawns(){
+
+    public ShapesList getdrawns() {
         return this.drawnShapes.getDrawnShapes();
     }
 
@@ -64,20 +68,24 @@ public class ShapeService {
         return drawnShapes.checkCoordinate(click);
     }
 
-    public void clear(){
+    public void clear() {
         drawnShapes.clear();
     }
+
     public void move(int index, Point click) {
         drawnShapes.move(index, click);
     }
+
     public void copy(int index, Point click) {
         drawnShapes.copy(index, click);
     }
+
     public void delete(int index) {
         drawnShapes.delete(index);
     }
-    public void resize(int index,Point p1,Point p2) {
-        drawnShapes.resize(index,p1,p2);
+
+    public void resize(int index, Point p1, Point p2) {
+        drawnShapes.resize(index, p1, p2);
     }
 
 }
