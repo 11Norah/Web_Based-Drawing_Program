@@ -116,13 +116,12 @@ export class ConfigurationService {
     });
   }
 
-  load_send(filePath: string, fileType: string) {
+  load_send(filePath: string, fileType: string): any {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const params = new HttpParams()
       .append('filePath', 'E://Paint/Backend/TEST')
       .append('fileType', 'xml');
-    this.http.get<ResponseObject[]>('http://localhost:8080/load', {headers, params})
-    .subscribe(res => console.log(res));
+    return this.http.get<ResponseObject[]>('http://localhost:8080/load', {headers, params});
   }
 
   clear_send() {

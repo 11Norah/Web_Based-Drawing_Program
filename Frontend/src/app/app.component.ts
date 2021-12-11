@@ -45,12 +45,13 @@ square():void{
     var m = confirm("Want to clear");
     var x,y;
     if (m) {
-        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-        onmousedown=(event:MouseEvent)=>{
-          x=event.offsetX;
-          y=event.offsetY;
-        }
+      this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+      this.ShapeService.clear_send();
+      onmousedown=(event:MouseEvent)=>{
+        x=event.offsetX;
+        y=event.offsetY;
       }
+    }
       }
 
       line(){
@@ -142,7 +143,8 @@ square():void{
   }
 
   Load(){
-    this.ShapeService.load_send("", "");
+    this.ShapeService.load_send("", "")
+      .subscribe(loadedShapes => this.load(loadedShapes));
   }
 
   load(shapes:{name:string,color:string,x1:number,y1:number,x2:number,y2:number,x3:number,y3:number}[]){
