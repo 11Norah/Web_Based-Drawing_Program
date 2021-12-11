@@ -38,8 +38,7 @@ export class ConfigurationService {
   }
   select(x1: number, y1: number): any {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get(`http://localhost:8080/select/${x1}/${y1}`, { responseType: 'text' })
-      .subscribe(res => console.log(res));
+    return this.http.get(`http://localhost:8080/select/${x1}/${y1}`, { responseType: 'text' });
   }
 
   //sending coordinates when ellipse / triangle  is called
@@ -70,8 +69,7 @@ export class ConfigurationService {
     const params = new HttpParams()
       .append('x', px)
       .append('y', py);
-    return this.http.get<ResponseObject[]>('http://localhost:8080/move', {params, headers})
-      .subscribe(res => console.log(res));
+    return this.http.get<ResponseObject[]>('http://localhost:8080/move', {params, headers});
   }
   //to copy shape
   copy_send(px1: number, py1: number): any {
@@ -81,8 +79,7 @@ export class ConfigurationService {
     const params = new HttpParams()
       .append('x', px1)
       .append('y', py1);
-    return this.http.get('http://localhost:8080/copy', {params, headers})
-      .subscribe(res => console.log(res));
+    return this.http.get('http://localhost:8080/copy', {params, headers});
   }
   delete_send(): any {
     console.log('ana fe delete');

@@ -75,7 +75,7 @@ square():void{
      move():void{
        var m = confirm("Choose shape then the new point");
        if(m){
-          let selectx=0;
+         let selectx=0;
          let selecty=0;
          let newx=0;
          let newy=0;
@@ -85,22 +85,25 @@ square():void{
            selectx=event.offsetX;
            selecty=event.offsetY;
            console.log(selectx,selecty)
-           let validshape:string = this.ShapeService.select(selectx,selecty);
-           console.log(validshape);
-           if(validshape!=="null"){
-           onmousedown=(event:MouseEvent)=>{
-           newx=event.offsetX;
-           newy=event.offsetY;
-           console.log(newx,newy)
-          this.data=this.ShapeService.move_send(newx, newy)
-             console.log('data is now set', this.data);
-             console.log(this.data)
-       onmousedown=(event:MouseEvent)=>{
-        a=event.offsetX;
-        b=event.offsetY;
-
-           this.load(this.data);
-           }}}}
+           let validshape:string;
+           this.ShapeService.select(selectx,selecty)
+           .subscribe(res => {
+             validshape = res;
+             if(validshape!=="null"){
+               onmousedown=(event:MouseEvent)=>{
+                 newx=event.offsetX;
+                 newy=event.offsetY;
+                 console.log(newx,newy)
+                 this.ShapeService.move_send(newx, newy)
+                  .subscribe(newRes => {
+                    this.data = newRes;
+                    console.log('data is now set', this.data);
+                    this.load(this.data);
+                  })
+               }
+              }
+           })
+          }
 
 
         }
@@ -114,12 +117,21 @@ square():void{
       selectx=event.offsetX;
       selecty=event.offsetY;
       console.log(selectx,selecty)
-      onmousedown=(event:MouseEvent)=>{
-      newx=event.offsetX;
-      newy=event.offsetY;
-      console.log(newx,newy)
-      this.ShapeService.copy_send(selectx,  selecty)
-    }}
+      this.ShapeService.select(selectx, selecty)
+        .subscribe(res => {
+          if(res !== "null"){
+            onmousedown=(event:MouseEvent)=>{
+              newx=event.offsetX;
+              newy=event.offsetY;
+              console.log(newx, newy)
+              this.ShapeService.copy_send(selectx, selecty)
+                .subscribe(newRes => {
+                  this.load(newRes);
+                })
+            }
+          }
+        })
+      }
   }
   resize(){
     let selectx=0;
