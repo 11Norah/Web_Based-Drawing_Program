@@ -195,6 +195,21 @@ public class DrawnShapes implements DrawnShapesI {
     }
     public void resize(int index,Point p1,Point p2) {
         drawnShapes.get(index).resize(p1,p2);
+        Shape shape = drawnShapes.get(index);
+        double x1 = 0, x2 = 0, x3 = 0, y1 = 0, y2 = 0, y3 = 0;
+        if(shape.getPoints()[0] != null) {
+            x1 = shape.getPoints()[0].getX();
+            y1 = shape.getPoints()[0].getY();
+        }
+        if(shape.getPoints()[1] != null) {
+            x2 = shape.getPoints()[1].getX();
+            y2 = shape.getPoints()[1].getY();
+        }
+        if(shape.getPoints()[2] != null) {
+            x3 = shape.getPoints()[2].getX();
+            y3 = shape.getPoints()[2].getY();
+        }
+        responses.get(index).resize(x1, y1, x2, y2, x3, y3);
     }
 
 }

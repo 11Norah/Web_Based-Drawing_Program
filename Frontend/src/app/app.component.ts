@@ -145,14 +145,29 @@ square():void{
       this.ShapeService.select(selectx, selecty)
         .subscribe(res => {
           if(res !== "null") {
+            let newX1 = 0, newY1 = 0, newX2 = 0, newY2 = 0;
             onmousedown=(event:MouseEvent)=>{
-              newx=event.offsetX;
-              newy=event.offsetY;
-              console.log(newx,newy)
-              this.ShapeService.resize_send(newx, newy)
-                .subscribe(newRes => {
-                  this.load(newRes);
-                })
+              newX1=event.offsetX;
+              newY1=event.offsetY;
+              console.log(newX1,newY1);
+              if(res === "triangle" || res === "ellipse") {
+                onmousedown=(event: MouseEvent) => {
+                  newX2 = event.offsetX;
+                  newY2 = event.offsetY;
+                  this.ShapeService.resize_send(newX1, newY1, newX2, newY2)
+                    .subscribe(newRes => {
+                      console.log(newRes);
+                      this.load(newRes);
+                    });
+                }
+              }
+              else {
+                this.ShapeService.resize_send(newX1, newY1, 0, 0)
+                  .subscribe(newRes => {
+                    console.log(newRes);
+                    this.load(newRes);
+                  });
+              }
             }
           }
         })

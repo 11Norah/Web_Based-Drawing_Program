@@ -89,13 +89,15 @@ export class ConfigurationService {
       .subscribe(res => console.log(res));
   }
   //to resize shape
-  resize_send(px1: number, py1: number): any {
+  resize_send(px1: number, py1: number, px2: number, py2: number): any {
     console.log('ana fe resize');
     console.log(this.b);
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const params = new HttpParams()
       .append('x1', px1)
       .append('y1', py1)
+      .append('x2', px2)
+      .append('y2', py2);
     return this.http.get('http://localhost:8080/resize', {params, headers});
   }
   save_send(filePath: string, fileType: string) {
