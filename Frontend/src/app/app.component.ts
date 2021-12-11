@@ -124,7 +124,7 @@ square():void{
               newx=event.offsetX;
               newy=event.offsetY;
               console.log(newx, newy)
-              this.ShapeService.copy_send(selectx, selecty)
+              this.ShapeService.copy_send(newx, newy)
                 .subscribe(newRes => {
                   this.load(newRes);
                 })
@@ -142,11 +142,20 @@ square():void{
       selectx=event.offsetX;
       selecty=event.offsetY;
       console.log(selectx,selecty)
-      onmousedown=(event:MouseEvent)=>{
-      newx=event.offsetX;
-      newy=event.offsetY;
-      console.log(newx,newy)
-      }
+      this.ShapeService.select(selectx, selecty)
+        .subscribe(res => {
+          if(res !== "null") {
+            onmousedown=(event:MouseEvent)=>{
+              newx=event.offsetX;
+              newy=event.offsetY;
+              console.log(newx,newy)
+              this.ShapeService.resize_send(newx, newy)
+                .subscribe(newRes => {
+                  this.load(newRes);
+                })
+            }
+          }
+        })
     }
   }
 
