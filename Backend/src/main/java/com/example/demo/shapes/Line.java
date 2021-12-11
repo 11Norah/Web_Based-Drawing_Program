@@ -33,6 +33,7 @@ public class Line extends Shape implements ShapeI {
     @Override
     public void afterMove(Point click) {
         this.p2 = lineServices.afterMove(click, this.m, this.p1, this.p2, this.length);
+        this.p1 = click;
     }
 
 
@@ -45,7 +46,7 @@ public class Line extends Shape implements ShapeI {
         Point[] arr = new Point[3];
         arr[0] = p1;
         arr[1] = p2;
-        arr[2] = null;
+        arr[2] = new Point(0,0);
         return arr;
     }
 

@@ -47,7 +47,7 @@ public class Circle extends Shape implements ShapeI {
         Point[] arr = new Point[3];
         arr[0] = center;
         arr[1] = second;
-        arr[2] = null;
+        arr[2] = new Point(0,0);
         return arr;
     }
 

@@ -106,7 +106,7 @@ public class Square extends Shape implements ShapeI {
         Point[] arr = new Point[3];
         arr[0] = this.p1;
         arr[1] = this.p2;
-        arr[2] = null;
+        arr[2] = new Point(0,0);
         return arr;
     }
 

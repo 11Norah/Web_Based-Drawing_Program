@@ -4,15 +4,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import com.example.demo.factory.ObjectFactoryI;
 import com.example.demo.factory.ObjectFactoryService;
 import com.example.demo.response.ResponseObject;
+import com.example.demo.services.undoServices.UndoObject;
+import com.example.demo.services.undoServices.UndoObjectBuilder;
+import com.example.demo.services.undoServices.UndoRedoServices;
 import com.example.demo.shapes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,13 +27,38 @@ public class DrawnShapes implements DrawnShapesI {
     private XmlMapper xmlMapper;
     private ResponsesList responses;
     private ResponsesList undoneResponses;
+    private Stack<UndoObject> undoObjectList;
+    private Stack<UndoObject> redoObjectList;
 
 
-    public List<ResponseObject> getResponses(){
+    @Autowired
+    UndoObjectBuilder undoObjectBuilder;
+
+    @Autowired
+    UndoRedoServices undoRedoServices;
+
+    public List<ResponseObject> getResponses() {
         return this.responses;
     }
-    public ShapesList getDrawnShapes(){
+
+    public void addToUndo(UndoObject undoObject) {
+        this.undoObjectList.push(undoObject);
+    }
+
+    public ShapesList getDrawnShapes() {
         return this.drawnShapes;
+    }
+
+    public ResponsesList getUndoneResponses() {
+        return this.undoneResponses;
+    }
+
+    public void setDrawnShapes(ShapesList drawnShapes) {
+        this.drawnShapes = drawnShapes;
+    }
+
+    public void setResponses(ResponsesList responses) {
+        this.responses = responses;
     }
 
     public int checkCoordinate(Point click) {
@@ -45,6 +75,8 @@ public class DrawnShapes implements DrawnShapesI {
         this.drawnShapes = new ShapesList();
         this.undoneResponses = new ResponsesList();
         this.responses = new ResponsesList();
+        this.undoObjectList = new Stack<>();
+        this.redoObjectList = new Stack<>();
         mapper = new ObjectMapper();
         xmlMapper = new XmlMapper();
     }
@@ -53,18 +85,19 @@ public class DrawnShapes implements DrawnShapesI {
         this.responses.add(response);
     }
 
-
-    public void undoShapes() {
-        if (responses.size() != 0) {
-            undoneResponses.add(responses.remove(responses.size() - 1));
-            drawnShapes.remove(drawnShapes.size()-1);
-        } else {
-            System.out.println("Nothing to undo");
-        }
+    public void addResponse(ResponseObject response, int index) {
+        this.responses.add(index, response);
     }
-    public void clear(){
+
+
+    public void clearRedoList() {
+        this.redoObjectList.clear();
+    }
+
+    public void clear() {
+        UndoObject newObject = undoObjectBuilder.afterClear(responses, drawnShapes);
+        this.addToUndo(newObject);
         drawnShapes.clear();
-        undoneResponses.clear();
         responses.clear();
     }
 
@@ -72,16 +105,25 @@ public class DrawnShapes implements DrawnShapesI {
         drawnShapes.add(shape);
     }
 
+    public void addShape(Shape shape, int index) {
+        drawnShapes.add(index, shape);
+    }
+
+    public void undoShapes() {
+        if (!undoObjectList.empty()) {
+            UndoObject last = undoObjectList.pop();
+            undoRedoServices.undo(last);
+            redoObjectList.push(last);
+        } else {
+            System.out.println("Nothing to undo");
+        }
+    }
+
     public void redoShape() {
-        if (undoneResponses.size() != 0) {
-            responses.add(undoneResponses.remove(undoneResponses.size() - 1));
-            ObjectFactoryI factory = new ObjectFactoryService();
-            ResponseObject res = responses.get(responses.size()-1);
-            Point p1 = new Point(res.getX1(), res.getY1());
-            Point p2 = new Point(res.getX2(), res.getY2());
-            Point p3 = new Point(res.getX3(), res.getY3());
-            Shape shape = factory.getObject(res.getName(), res.getColor(), p1, p2, p3);
-            addShape(shape);
+        if (redoObjectList.size() != 0) {
+            UndoObject last = undoObjectList.pop();
+            undoRedoServices.redo(last);
+            undoObjectList.push(last);
         } else {
             System.out.println("Nothing to redo");
         }
@@ -137,13 +179,11 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
 
-    public void move(int index,Point click) {
+    public void move(int index, Point click) {
         Shape tempShape;
         ResponseObject tempResponse;
         drawnShapes.get(index).afterMove(click);
         tempShape = drawnShapes.get(index);
-        drawnShapes.remove(index);
-        drawnShapes.add(tempShape);
         double x1 = 0, x2 = 0, x3 = 0, y1 = 0, y2 = 0, y3 = 0;
         if(tempShape.getPoints()[0] != null) {
             x1 = tempShape.getPoints()[0].getX();
@@ -159,18 +199,22 @@ public class DrawnShapes implements DrawnShapesI {
         }
         tempResponse = new ResponseObject(tempShape.getName(),tempShape.getColor(), x1, y1, x2, y2, x3, y3);
         responses.remove(index);
-        responses.add(tempResponse);
+        responses.add(index,tempResponse);
+
     }
 
-    public void copy(int index,Point click) {
-        Shape originalShape,newShape;
+    public void copy(int index, Point click) {
+        Shape originalShape, newShape;
         ResponseObject tempResponse;
         originalShape = drawnShapes.get(index);
         drawnShapes.get(index).afterMove(click);
         newShape = drawnShapes.get(index);
         drawnShapes.remove(index);
-        drawnShapes.add(index,originalShape);
+        drawnShapes.add(index, originalShape);
         drawnShapes.add(newShape);
+        tempResponse = new ResponseObject(newShape.getName(), newShape.getColor(), newShape.getPoints()[0].getX(), newShape.getPoints()[0].getY(), newShape.getPoints()[1].getX(), newShape.getPoints()[1].getY(), newShape.getPoints()[2].getX(), newShape.getPoints()[2].getY());
+        UndoObject newObject = undoObjectBuilder.afterCopy(responses.get(index), tempResponse, index, responses.size() - 1);
+        this.addToUndo(newObject);
         double x1 = 0, x2 = 0, x3 = 0, y1 = 0, y2 = 0, y3 = 0;
         if(newShape.getPoints()[0] != null) {
             x1 = newShape.getPoints()[0].getX();
@@ -190,11 +234,21 @@ public class DrawnShapes implements DrawnShapesI {
     }
 
     public void delete(int index) {
+        UndoObject newObject = undoObjectBuilder.afterDelete(responses.get(index), index);
+        this.addToUndo(newObject);
         drawnShapes.remove(index);
         responses.remove(index);
     }
-    public void resize(int index,Point p1,Point p2) {
-        drawnShapes.get(index).resize(p1,p2);
+
+    public void resize(int index, Point p1, Point p2) {
+        ResponseObject tempResponse;
+        drawnShapes.get(index).resize(p1, p2);
+        Shape newShape = drawnShapes.get(index);
+        tempResponse = new ResponseObject(newShape.getName(), newShape.getColor(), newShape.getPoints()[0].getX(), newShape.getPoints()[0].getY(), newShape.getPoints()[1].getX(), newShape.getPoints()[1].getY(), newShape.getPoints()[2].getX(), newShape.getPoints()[2].getY());//newResp
+        UndoObject newObject = undoObjectBuilder.afterResize(responses.get(index), tempResponse, index);
+        this.addToUndo(newObject);
+        responses.remove(index);
+        responses.add(index, tempResponse);
         Shape shape = drawnShapes.get(index);
         double x1 = 0, x2 = 0, x3 = 0, y1 = 0, y2 = 0, y3 = 0;
         if(shape.getPoints()[0] != null) {

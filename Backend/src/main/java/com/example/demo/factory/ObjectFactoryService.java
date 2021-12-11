@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
 public class ObjectFactoryService implements ObjectFactoryI {
 
 
-    public Shape getObject(String name,String color, Point first, Point second, Point third) {
+    public Shape getObject(String name, String color, Point first, Point second, Point third) {
         switch (name) {
             case "rectangle":
-                return new Rectangle(first,second,color);
+                return new Rectangle(first, second, color);
             case "square":
-                return new Square(first,second,color);
+                return new Square(first, second, color);
             case "triangle":
                 return new Triangle(first, second, third, color);
             case "ellipse":
-                return new Ellipse(first,second,third,color);
+                return new Ellipse(first, second, third, color);
             case "line":
-                return new Line(first,second,color);
+                return new Line(first, second, color);
             case "circle":
-                return new Circle(first,second,color);
+                return new Circle(first, second, color);
             default:
                 throw new NullPointerException();
         }
